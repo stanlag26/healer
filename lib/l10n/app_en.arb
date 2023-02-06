@@ -1,0 +1,42 @@
+{
+    "error_auth": "Something went wrong :(",
+    "no_internet": "No internet connection",
+    "validation": "Not all data entered",
+
+
+    "login": "Sign-in",
+    "mail": "Email",
+    "password": "Password",
+    "registration": "Registration",
+    "forgot_password": "Forgot password",
+
+    "password_reset_text": "Enter your email to reset your password",
+    "reset_password": "Reset password",
+
+    "healer": "Healer",
+    "my_course": "My course",
+    "recipe": "Recipes",
+
+    "add_recipe": "Add recipe",
+    "namePill": "The name of the tablets",
+    "descriptionPill": "Description of tablets",
+    "add_photo": "Add photo of pills",
+    "change_photo": "Change photo of pills",
+    "add_time_pills": "Add pill time",
+
+    "del_recipe": "Delete recipe?",
+    "yes": "Yes",
+    "no": "No",
+    "galery": "Galery",
+    "camera": "Camera",
+    "cancel": "Cancel",
+
+    "time_pills": "Time to take the pills:",
+
+    "allow_notifications": "Allow Notifications",
+    "app_to_send_notifications": "The Healer app wants to send you notifications",
+    "disable":"Disable",
+    "allow": "Allow"
+
+
+}

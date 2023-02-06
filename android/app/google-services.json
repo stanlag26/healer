@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "46357465108",
+    "project_id": "doctor-a0382",
+    "storage_bucket": "doctor-a0382.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:46357465108:android:b1b35fe1e096267c977f01",
+        "android_client_info": {
+          "package_name": "com.example.doctor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "46357465108-c7bkpqlr1t06alf6v4hpsfth1tsf5b87.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClIBROv7_8NpWuPYTOzH8_w9TJ_vBya_4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "46357465108-c7bkpqlr1t06alf6v4hpsfth1tsf5b87.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "46357465108-06dnuqe05kec8nhjfnc0s1i45arkgol2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.doctor"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:46357465108:android:6e848f4a4f73c03a977f01",
+        "android_client_info": {
+          "package_name": "com.example.healer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "46357465108-c7bkpqlr1t06alf6v4hpsfth1tsf5b87.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClIBROv7_8NpWuPYTOzH8_w9TJ_vBya_4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "46357465108-c7bkpqlr1t06alf6v4hpsfth1tsf5b87.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "46357465108-06dnuqe05kec8nhjfnc0s1i45arkgol2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.doctor"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
