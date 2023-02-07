@@ -7,6 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../../api/main_navigation/main_navigation.dart';
 import '../../../api/my_functions/my_functions.dart';
 import '../../../api/timeofdate/timeofdate.dart';
 import '../../../entity/course.dart';
@@ -98,14 +99,14 @@ class CardWidget extends StatelessWidget {
           tileColor: Colors.white,
           onTap: () {
             CourseHive courseHive = model.courses[indexInList];
-            Navigator.pushNamed(context, '/course/edit', arguments: courseHive);
+            Navigator.pushNamed(context, MainNavigationRouteNames.coursesEdit, arguments: courseHive);
           },
           leading: ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
             child: Image.file(File(model.courses[indexInList].photoPill)),
           ),
           title: Text(model.courses[indexInList].namePill),
-          subtitle: Text(AppLocalizations.of(context)!.time_pills + listInString(model.courses[indexInList].timeOfReceipt)),
+          subtitle: Text('${AppLocalizations.of(context)!.time_pills} ${listToString(model.courses[indexInList].timeOfReceipt)}'),
           trailing: IconButton(
               onPressed: () {
                 showMyAlertDialogDelHiveCourse();

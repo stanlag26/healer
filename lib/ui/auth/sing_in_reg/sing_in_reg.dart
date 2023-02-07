@@ -4,6 +4,7 @@ import 'package:healer/ui/auth/sing_in_reg/reg_singin_model.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../api/auth/auth.dart';
+import '../../../api/main_navigation/main_navigation.dart';
 import '../../../const/const.dart';
 import '../../../my_widgets/my_button.dart';
 import '../../../my_widgets/my_text_field.dart';
@@ -55,7 +56,7 @@ class RegisterSingIn extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       child: TextButton(
                           onPressed: () {
-                            Navigator.pushNamed(context, '/sign-in/forgot');
+                            Navigator.pushNamed(context, MainNavigationRouteNames.forgotPass);
                           },
                           child: Text(
                             AppLocalizations.of(context)!.forgot_password,

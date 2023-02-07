@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:healer/my_widgets/my_toast.dart';
 
+import '../main_navigation/main_navigation.dart';
+
 
 class MyAuth{
 
@@ -21,7 +23,7 @@ class MyAuth{
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: mail, password: password);
-      Navigator.of(context).pop();
+      Navigator.popAndPushNamed(context, MainNavigationRouteNames.main);
     } on FirebaseAuthException catch (e) {
       myToast("${AppLocalizations.of(context)!.error_auth}: ${e.message}");
     }

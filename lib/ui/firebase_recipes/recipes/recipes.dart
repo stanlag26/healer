@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../api/firebase_api/firebase_api.dart';
 import '../../../api/hive_api/hive_api.dart';
 import '../../../api/internet_connection/internet_connection.dart';
+import '../../../api/main_navigation/main_navigation.dart';
 import '../../../api/timeofdate/timeofdate.dart';
 import '../../../entity/course.dart';
 import '../../../api/my_functions/my_functions.dart';
@@ -44,7 +45,7 @@ class Recipes extends StatelessWidget {
         backgroundColor: Colors.blue,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(23)),
         onPressed: () {
-          Navigator.pushNamed(context, '/recipes/add');
+          Navigator.pushNamed(context, MainNavigationRouteNames.recipesAdd);
         },
         child: const Icon(Icons.add),
       ),
@@ -61,13 +62,14 @@ class CardWidget extends StatelessWidget {
   final Course course;
   @override
   Widget build(BuildContext context) {
+
     return Card(
       elevation: 8,
       shadowColor: Colors.black,
       child: ListTile(
           tileColor: Colors.white,
           onTap: () {
-            Navigator.pushNamed(context, '/recipes/edit', arguments: course);
+            Navigator.pushNamed(context, MainNavigationRouteNames.recipesEdit, arguments: course);
           },
           leading:  IconButton(
               onPressed: () async {
@@ -78,14 +80,15 @@ class CardWidget extends StatelessWidget {
                 showMyDialogCircular(context);
              await saveCoursesToHive(course);
                 Navigator.of(context, rootNavigator: true).pop();
-                Navigator.pushNamed(context, '/');
+                // if (context.mounted) Navigator.of(context).pop();
+                Navigator.popAndPushNamed(context, MainNavigationRouteNames.main);
               },
               icon: const Icon(
                 FontAwesomeIcons.plus,
                 color: Colors.blue,
               )),
           title: Text(course.namePill),
-          subtitle: Text(AppLocalizations.of(context)!.time_pills + listInString(course.timeOfReceipt)),
+          subtitle: Text('${AppLocalizations.of(context)!.time_pills} ${listToString(course.timeOfReceipt)}'),
           trailing: IconButton(
               onPressed: () {
                 showMyAlertDialogDelRecipes(context, course);

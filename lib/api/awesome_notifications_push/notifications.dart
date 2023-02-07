@@ -1,9 +1,9 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 
-class Noti {
+class NotificationService {
 
  static Future<void> createNotification({
-     required int id,
+     required int notificationId,
       required String name,
       required String description,
       required String photo,
@@ -11,7 +11,7 @@ class Noti {
       required int minute,}) async {
     await AwesomeNotifications().createNotification(
         content: NotificationContent(
-          id: id,
+          id: notificationId,
           channelKey: 'basic_channel',
           title: name,
           body: description,

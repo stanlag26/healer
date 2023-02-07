@@ -14,8 +14,8 @@
     "reset_password": "Reset password",
 
     "healer": "Healer",
-    "my_course": "My course",
-    "recipe": "Recipes",
+    "my_course": "What I'm drinking now",
+    "recipe": "Recipes in database",
 
     "add_recipe": "Add recipe",
     "namePill": "The name of the tablets",

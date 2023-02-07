@@ -19,6 +19,7 @@ class CoursesModel extends ChangeNotifier {
 
   void _readCoursesFromHive(Box<CourseHive> box) {
     _courses = box.values.toList();
+    print(_courses);
     notifyListeners();
   }
 
@@ -38,15 +39,15 @@ class CoursesModel extends ChangeNotifier {
   }
 
   void _saveCoursesToPush() async {
-    await Noti.cancelScheduledNotifications();
+    await NotificationService.cancelScheduledNotifications();
 
     int count = 0;
     var timeSplit=[];
     for (var course in _courses) {
       for (var time in course.timeOfReceipt) {
         timeSplit = time.split(':');
-        await Noti.createNotification(
-            id: count++,
+        await NotificationService.createNotification(
+            notificationId: count++,
             name: 'Время приема ${course.namePill}а',
             description: course.descriptionPill,
             photo: course.photoPill,
