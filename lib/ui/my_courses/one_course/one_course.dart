@@ -1,8 +1,5 @@
-
-
 import 'dart:io';
 import 'package:healer/entity/course_hive.dart';
-import 'package:healer/my_widgets/my_button.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../const/const.dart';
@@ -27,14 +24,14 @@ class OneCourse extends StatelessWidget {
         child: ListView(
           children: [
             Center(child: Text(courseHive.descriptionPill, style: MyTextStyle.textStyle15)),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             MyAvatarPhoto(photo:Image.file(File(courseHive.photoPill), fit: BoxFit.cover)),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Container(
+            SizedBox(
               height: 300,
               child: ListView.builder(
                   itemCount: courseHive.timeOfReceipt.length,
@@ -44,7 +41,7 @@ class OneCourse extends StatelessWidget {
                         child: Column(
                           children: [
                             ListTile(
-                                leading:Icon(FontAwesomeIcons.clock),
+                                leading:const Icon(FontAwesomeIcons.clock),
                                 title: Text(courseHive.timeOfReceipt[index].toString()),
                             ),
                           ],

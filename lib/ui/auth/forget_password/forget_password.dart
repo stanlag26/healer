@@ -15,7 +15,7 @@ class ForgotWidget extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white24,
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.blue,
         ),
       ),
@@ -26,7 +26,7 @@ class ForgotWidget extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 30, right: 30),
               child: Text(AppLocalizations.of(context)!.password_reset_text,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
             ),
             MyTextField(
               hintTextField: AppLocalizations.of(context)!.mail,

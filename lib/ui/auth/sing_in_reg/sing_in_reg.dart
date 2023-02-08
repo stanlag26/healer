@@ -66,12 +66,12 @@ class RegisterSingIn extends StatelessWidget {
                     ? MyButton(
                         myText: Text(AppLocalizations.of(context)!.login),
                         onPress: ()  {
-                          MyAuth.mailSingIn(context, _loginController.text.trim(), _passwordController.text.trim());
+                          MyAuth.signInWithEmail(context, _loginController.text.trim(), _passwordController.text.trim());
                         })
                     : MyButton(
                         myText: Text(AppLocalizations.of(context)!.registration),
                         onPress: ()  {
-                         MyAuth.mailRegister(context, _loginController.text.trim(), _passwordController.text.trim());
+                         MyAuth.registerWithEmail(context, _loginController.text.trim(), _passwordController.text.trim());
                         }),
                 const SizedBox(
                   height: 5,

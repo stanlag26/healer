@@ -3,7 +3,6 @@ import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:healer/ui/navigation/my_navigation.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'entity/course_hive.dart';
 import 'firebase_options.dart';
@@ -35,7 +34,7 @@ Future<void> main() async {
     ],
   );
 
-  runApp(MyNavigation());
+  runApp(const MyNavigation());
   // runApp(
   //   DevicePreview(
   //     enabled: true,

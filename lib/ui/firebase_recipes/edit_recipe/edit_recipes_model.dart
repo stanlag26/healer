@@ -2,11 +2,9 @@
 
 import 'dart:io';
 import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
-import 'package:healer/entity/course_hive.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import '../../../api/firebase_api/firebase_api.dart';
 import '../../../entity/course.dart';
 
@@ -25,7 +23,7 @@ class EditRecipesModel extends ChangeNotifier{
 
 
   Future<void> editCourseAndToFirebase(BuildContext context) async {
-      photoPill = tumbler == true ? await FireBaseApi().reLoadImageOnStorage( pickedFile!, namePhotoPillInStorage):
+      photoPill = tumbler == true ? await FireBaseStorageApi().reLoadImageOnStorage( pickedFile!, namePhotoPillInStorage):
       photoPill;
       Course course = Course(
           idDoc: idDoc,
@@ -36,7 +34,7 @@ class EditRecipesModel extends ChangeNotifier{
           timeOfReceipt: timeOfReceipt,
           namePhotoPillInStorage: tumbler == true ? pickedFile!.name
              :namePhotoPillInStorage);
-      await FireBaseApi().editCourse(context,course);
+      if (context.mounted) await FireBaseFirestoreApi().editCourse(context,course);
 
   }
 
@@ -98,7 +96,6 @@ class EditRecipesModel extends ChangeNotifier{
             ),
             onPressed: (BuildContext context) {
               _getPhoto(ImageSource.camera);
-              ;
               Navigator.pop(context);
             }),
       ],

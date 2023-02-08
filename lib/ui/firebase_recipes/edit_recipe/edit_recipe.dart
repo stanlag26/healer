@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'dart:io';
 import '../../../api/internet_connection/internet_connection.dart';
 import '../../../api/my_functions/my_functions.dart';
-import '../../../api/timeofdate/timeofdate.dart';
 import '../../../const/const.dart';
 import '../../../entity/course.dart';
 import '../../../my_widgets/my_avatar_photo.dart';
@@ -56,26 +55,26 @@ class EditRecipes extends StatelessWidget {
           actions: [
             IconButton(
                 onPressed: () async {
-                  if (await internetConnection() != true) {
-                    myToast(AppLocalizations.of(context)!.no_internet);
+                  if (await checkInternetConnection() != true) {
+                    if (context.mounted) myToast(AppLocalizations.of(context)!.no_internet);
                     return;
                   }
                   if (namePillController.text.isEmpty &&
                       descriptionPillController.text.isEmpty &&
                       model.timeOfReceipt.isEmpty) {
-                    myToast(AppLocalizations.of(context)!.validation);
+                    if (context.mounted) myToast(AppLocalizations.of(context)!.validation);
                     return;
                   }
-                  showMyDialogCircular(context);
-                  await model.editCourseAndToFirebase(context);
-                  Navigator.of(context, rootNavigator: true).pop();
-                  Navigator.pop(context);
+                  if (context.mounted)showMyDialogCircular(context);
+                  if (context.mounted)await model.editCourseAndToFirebase(context);
+                  if (context.mounted) Navigator.of(context, rootNavigator: true).pop();
+                  if (context.mounted) Navigator.pop(context);
                 },
-                icon: Icon(
+                icon: const Icon(
                   FontAwesomeIcons.floppyDisk,
                   size: 25,
                 )),
-            SizedBox(
+            const SizedBox(
               width: 20,
             )
           ],
@@ -93,7 +92,7 @@ class EditRecipes extends StatelessWidget {
               controller: descriptionPillController,
               maxLine: 3,
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             MyButton(
@@ -101,7 +100,7 @@ class EditRecipes extends StatelessWidget {
                 onPress: () {
                   model.myShowAdaptiveActionSheet(context);
                 }),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             model.tumbler == false
@@ -110,7 +109,7 @@ class EditRecipes extends StatelessWidget {
                 : MyAvatarPhoto(
                     photo:
                         Image.file(File(model.photoPill), fit: BoxFit.cover)),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             MyButton(
@@ -118,10 +117,10 @@ class EditRecipes extends StatelessWidget {
                 onPress: () {
                   model.addTime(context);
                 }),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Container(
+            SizedBox(
               height: 300,
               child: ListView.builder(
                   itemCount: model.timeOfReceipt.length,
@@ -137,7 +136,7 @@ class EditRecipes extends StatelessWidget {
                                   onPressed: () {
                                     model.delTime(index);
                                   },
-                                  icon: Icon(
+                                  icon: const Icon(
                                     FontAwesomeIcons.trash,
                                     color: Colors.red,
                                   ),

@@ -9,73 +9,74 @@ import '../../entity/course.dart';
 import '../../my_widgets/my_toast.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+class FireBaseFirestoreApi {
 
-class FireBaseApi {
-
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
 
   Future<void> createCourse(BuildContext context, Course course) async {
     try {
-      final docCourse =
-      FirebaseFirestore.instance.collection('Course').doc();
-      await docCourse.set(course.toJson());
+      await _db.collection('Course').add(course.toJson());
     } on FirebaseException catch (e) {
-      myToast("${AppLocalizations.of(context)!.error_auth}: ${e.message}");
+      _showAuthErrorToast(context, e.message);
     }
   }
 
-    Future<String> loadImageOnStorage(XFile? pickedFile) async {
-      final storageRef = FirebaseStorage.instance.ref();
-      final referenceDirImage = storageRef.child('images');
-      if (pickedFile != null) {
-        final referenceImageToUpload = referenceDirImage.child(pickedFile.name);
-        await referenceImageToUpload.putFile(File(pickedFile.path));
-        File(pickedFile.path).delete();
-        String photoPill = await referenceImageToUpload.getDownloadURL();
-        return photoPill;
-      } else {
-        String photoPill = defaultImage;
-        return photoPill;
-      }
+  Future<void> editCourse(BuildContext context, Course course) async {
+    try {
+      final docCourse = _db.collection('Course').doc(course.idDoc);
+      await docCourse.set(course.toJson());
+    } on FirebaseException catch (e) {
+      _showAuthErrorToast(context, e.message);
     }
+  }
 
-    Future<void> delCourse(BuildContext context, Course course) async {
-      try {
-        await FirebaseFirestore.instance
-            .collection('Course')
-            .doc(course.idDoc)
-            .delete();
-        // Create a reference to the file to delete
-        final storageRef = FirebaseStorage.instance.ref();
-        final desertRef =
-            storageRef.child('images/${course.namePhotoPillInStorage}');
-        if (desertRef.name != 'pills.jpg'){
-        await desertRef.delete();}
-      } on FirebaseException catch (e) {
-        // Caught an exception from Firebase.
-        myToast("${AppLocalizations.of(context)!.error_auth}: ${e.message}");
+  Future<void> delCourse(BuildContext context, Course course) async {
+    try {
+      await _db.collection('Course').doc(course.idDoc).delete();
+      final desertRef = _storage.ref().child(
+          'images/${course.namePhotoPillInStorage}');
+      if (desertRef.name != 'pills.jpg') {
+        await desertRef.delete();
       }
+    } on FirebaseException catch (e) {
+      _showAuthErrorToast(context, e.message);
     }
+  }
 
-    Future<void> editCourse(BuildContext context, Course course) async {
-      try {
-        final docCourse =
-            FirebaseFirestore.instance.collection('Course').doc(course.idDoc);
-        await docCourse.set(course.toJson());
-      } on FirebaseException catch (e) {
-        myToast("${AppLocalizations.of(context)!.error_auth}: ${e.message}");
-      }
+  static void _showAuthErrorToast(BuildContext context, String? errorMessage) {
+    myToast(
+        "${AppLocalizations.of(context)!.error_auth}: $errorMessage");
+  }
+}
+
+
+
+
+
+
+class FireBaseStorageApi {
+  final FirebaseStorage _storage = FirebaseStorage.instance;
+
+  Future<String> loadImageOnStorage(XFile? pickedFile) async {
+    final referenceDirImage = _storage.ref().child('images');
+    if (pickedFile != null) {
+      final referenceImageToUpload = referenceDirImage.child(pickedFile.name);
+      await referenceImageToUpload.putFile(File(pickedFile.path));
+      File(pickedFile.path).delete();
+      String photoPill = await referenceImageToUpload.getDownloadURL();
+      return photoPill;
+    } else {
+      return defaultImage;
     }
+  }
 
     Future<String> reLoadImageOnStorage(
         XFile pickedFile, String namePhotoPillInStorage) async {
-      // Создаем ссылку на хранилище из нашего приложения
-      final storageRef = FirebaseStorage.instance.ref();
-      // Удаляем файл со старым именем
       if (namePhotoPillInStorage != 'pills.jpg'){
-      await storageRef.child('images/$namePhotoPillInStorage').delete();}
-      final referenceDirImage = storageRef.child('images');
+      await _storage.ref().child('images/$namePhotoPillInStorage').delete();}
+      final referenceDirImage = _storage.ref().child('images');
       final referenceImageToUpload = referenceDirImage.child(pickedFile.name);
-
       await referenceImageToUpload.putFile(File(pickedFile.path));
       File(pickedFile.path).delete();
       String photoPill = await referenceImageToUpload.getDownloadURL();
@@ -83,11 +84,9 @@ class FireBaseApi {
     }
 
     Future downloadFile(String namePhotoPillInStorage) async {
-      final storageRef = FirebaseStorage.instance.ref();
-      final ref = storageRef.child('images/$namePhotoPillInStorage');
+      final ref = _storage.ref().child('images/$namePhotoPillInStorage');
       final dir = await getApplicationDocumentsDirectory();
       final file = File('${dir.path}/${ref.name}');
-      print('${dir.path}/${ref.name}');
       await ref.writeToFile(file);
       return '${dir.path}/${ref.name}';
 

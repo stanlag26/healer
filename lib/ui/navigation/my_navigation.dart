@@ -25,10 +25,10 @@ class MyNavigation extends StatelessWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       theme: ThemeData(
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
             elevation: 0,
             backgroundColor: Colors.white10,
-            iconTheme: const IconThemeData(color: Colors.grey, size: 15),
+            iconTheme: IconThemeData(color: Colors.grey, size: 15),
             titleTextStyle: MyTextStyle.textStyle25),
       ),
       debugShowCheckedModeBanner: false,

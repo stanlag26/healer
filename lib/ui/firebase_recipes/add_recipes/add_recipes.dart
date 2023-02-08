@@ -41,27 +41,27 @@ class AddRecipes extends StatelessWidget {
           actions: [
             IconButton(
                 onPressed: () async {
-                  if (await internetConnection() != true) {
-                    myToast(AppLocalizations.of(context)!.no_internet);
+                  if (await checkInternetConnection() != true) {
+                    if (context.mounted) myToast(AppLocalizations.of(context)!.no_internet);
                     return;
                   }
-                  if (namePillController.text.isEmpty &&
-                      descriptionPillController.text.isEmpty &&
-                      model.timeOfReceipt.isEmpty) {
-                    myToast(AppLocalizations.of(context)!.validation);
+                  if (namePillController.text.isEmpty ||
+                      descriptionPillController.text.isEmpty ||
+                      model.pickedFile == null) {
+                    if (context.mounted) myToast(AppLocalizations.of(context)!.validation);
                     return;
                   }
-                  showMyDialogCircular(context);
-                  await model.completeCourseAndToFirebase(context);
+                  if (context.mounted) showMyDialogCircular(context);
+                  if (context.mounted)  await model.completeCourseAndToFirebase(context);
 
-                  Navigator.of(context, rootNavigator: true).pop();
-                  Navigator.pop(context);
+                  if (context.mounted) Navigator.of(context, rootNavigator: true).pop();
+                  if (context.mounted) Navigator.pop(context);
                 },
-                icon: Icon(
+                icon: const Icon(
                   FontAwesomeIcons.floppyDisk,
                   size: 25,
                 )),
-            SizedBox(
+            const SizedBox(
               width: 20,
             )
           ],
@@ -79,7 +79,7 @@ class AddRecipes extends StatelessWidget {
               controller: descriptionPillController,
               maxLine: 3,
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             MyButton(
@@ -89,14 +89,14 @@ class AddRecipes extends StatelessWidget {
                 onPress: () {
                   model.myShowAdaptiveActionSheet(context);
                 }),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             model.tumbler == true
                 ? MyAvatarPhoto(
                     photo: Image.file(File(model.photoPill), fit: BoxFit.cover))
                 : Container(),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             MyButton(
@@ -104,10 +104,10 @@ class AddRecipes extends StatelessWidget {
                 onPress: () {
                   model.addTime(context);
                 }),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Container(
+            SizedBox(
               height: 300,
               child: ListView.builder(
                   itemCount: model.timeOfReceipt.length,
@@ -117,13 +117,13 @@ class AddRecipes extends StatelessWidget {
                         child: Column(
                           children: [
                             ListTile(
-                                leading: Icon(FontAwesomeIcons.clock),
+                                leading: const Icon(FontAwesomeIcons.clock),
                                 title: Text(model.timeOfReceipt[index]),
                                 trailing: IconButton(
                                   onPressed: () {
                                     model.delTime(index);
                                   },
-                                  icon: Icon(
+                                  icon: const Icon(
                                     FontAwesomeIcons.trash,
                                     color: Colors.red,
                                   ),

@@ -36,7 +36,7 @@
     "allow_notifications": "Allow Notifications",
     "app_to_send_notifications": "The Healer app wants to send you notifications",
     "disable":"Disable",
-    "allow": "Allow"
-
-
+    "allow": "Allow",
+    "time_medication": "Time of medication:",
+    "logoff": "Are you sure you want to log out of your account?"
 }

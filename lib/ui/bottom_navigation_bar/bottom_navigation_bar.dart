@@ -5,10 +5,9 @@ import '../../api/main_navigation/main_navigation.dart';
 import '../../const/const.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../my_widgets/my_show_dialog.dart';
 import '../firebase_recipes/recipes/recipes.dart';
 import '../my_courses/courses/hive_courses.dart';
-
-
 
 class MyBottomNavigationBar extends StatefulWidget {
   const MyBottomNavigationBar({Key? key}) : super(key: key);
@@ -21,8 +20,8 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
   int selectedIndex = 0;
 
   List<Widget> widgetOptions = <Widget>[
-    CoursesProviderWidget(),
-    Recipes(),
+    const CoursesProviderWidget(),
+    const Recipes(),
   ];
 
   void onItemTapped(value) {
@@ -32,15 +31,31 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.healer, style: MyTextStyle.textStyle25,),
+        title: Text(
+          AppLocalizations.of(context)!.healer,
+          style: MyTextStyle.textStyle25,
+        ),
         centerTitle: true,
         actions: [
           IconButton(
               onPressed: () {
-                MyAuth.signOut(context);
-                Navigator.popAndPushNamed(context, MainNavigationRouteNames.singIn);
+                showDialog<void>(
+                    context: context,
+                    barrierDismissible: false, // user must tap button!
+                    builder: (BuildContext context) {
+                      return MyShowMyAlertDialog(
+                        text: AppLocalizations.of(context)!.logoff,
+                        onPressed: () {
+                          MyAuth.signOut(context);
+                          Navigator.popAndPushNamed(
+                              context, MainNavigationRouteNames.singIn);
+                          Navigator.of(context).pop();
+                        },
+                      );
+                    }
+                );
               },
               icon: const Icon(
                 FontAwesomeIcons.arrowRightFromBracket,
@@ -48,25 +63,21 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
         ],
       ),
       body: widgetOptions.elementAt(selectedIndex),
-      bottomNavigationBar: BottomNavigationBar(items:  [
-        BottomNavigationBarItem(
-          icon: const Icon(FontAwesomeIcons.pills),
-          label: AppLocalizations.of(context)!.my_course,
-        ),
-        BottomNavigationBarItem(
-          icon: const Icon(FontAwesomeIcons.prescriptionBottleMedical),
-          label: AppLocalizations.of(context)!.recipe,
-        ),
-      ],
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(
+            icon: const Icon(FontAwesomeIcons.pills),
+            label: AppLocalizations.of(context)!.my_course,
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(FontAwesomeIcons.prescriptionBottleMedical),
+            label: AppLocalizations.of(context)!.recipe,
+          ),
+        ],
         currentIndex: selectedIndex,
         selectedItemColor: Colors.blue,
         onTap: onItemTapped,
-
       ),
-
-
-
-
     );
   }
 }

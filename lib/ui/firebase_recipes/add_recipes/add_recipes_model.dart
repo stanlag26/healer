@@ -14,11 +14,11 @@ class AddRecipesModel extends ChangeNotifier {
   List<String> timeOfReceipt = [];
   var tumbler = false;
   XFile? pickedFile;
-  String photoPill = 'images/pills.jpg';
+  late String photoPill;
 
 
   Future<void> completeCourseAndToFirebase(BuildContext context) async {
-      photoPill =await FireBaseApi().loadImageOnStorage(pickedFile);
+      photoPill =await FireBaseStorageApi().loadImageOnStorage(pickedFile);
       Course course = Course(
           idUser: userId ?? '',
           namePill: namePill,
@@ -26,7 +26,7 @@ class AddRecipesModel extends ChangeNotifier {
           photoPill: photoPill,
           timeOfReceipt: timeOfReceipt,
           namePhotoPillInStorage:pickedFile==null ? 'pills.jpg':pickedFile!.name);
-      await FireBaseApi().createCourse(context,course);
+      if (context.mounted)await FireBaseFirestoreApi().createCourse(context,course);
 
   }
 

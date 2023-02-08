@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-/*
-Поле ввода
- */
 
 
 class MyTextField extends StatelessWidget {

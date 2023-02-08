@@ -11,6 +11,7 @@ import '../../../entity/course.dart';
 import '../../../api/my_functions/my_functions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../../my_widgets/my_show_dialog.dart';
 import '../../../my_widgets/my_toast.dart';
 
 
@@ -27,7 +28,7 @@ class Recipes extends StatelessWidget {
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return Container(child: Text('mm'),
+            return const Center(child: Text(''),
             );
           }
           return ListView.builder(
@@ -73,15 +74,15 @@ class CardWidget extends StatelessWidget {
           },
           leading:  IconButton(
               onPressed: () async {
-                if (await internetConnection() != true) {
-                myToast(AppLocalizations.of(context)!.no_internet);
+                if (await checkInternetConnection() != true) {
+                  if (context.mounted) myToast(AppLocalizations.of(context)!.no_internet);
                 return;
                 }
-                showMyDialogCircular(context);
+                if (context.mounted) showMyDialogCircular(context);
              await saveCoursesToHive(course);
-                Navigator.of(context, rootNavigator: true).pop();
+                if (context.mounted)Navigator.of(context, rootNavigator: true).pop();
                 // if (context.mounted) Navigator.of(context).pop();
-                Navigator.popAndPushNamed(context, MainNavigationRouteNames.main);
+                if (context.mounted) Navigator.popAndPushNamed(context, MainNavigationRouteNames.main);
               },
               icon: const Icon(
                 FontAwesomeIcons.plus,
@@ -91,7 +92,19 @@ class CardWidget extends StatelessWidget {
           subtitle: Text('${AppLocalizations.of(context)!.time_pills} ${listToString(course.timeOfReceipt)}'),
           trailing: IconButton(
               onPressed: () {
-                showMyAlertDialogDelRecipes(context, course);
+                showDialog<void>(
+                    context: context,
+                    barrierDismissible: false, // user must tap button!
+                    builder: (BuildContext context) {
+                      return MyShowMyAlertDialog(
+                        text: AppLocalizations.of(context)!.del_recipe,
+                        onPressed: () {
+                          FireBaseFirestoreApi().delCourse(context,course);
+                          Navigator.of(context).pop();
+                        },
+                      );
+                    }
+                );
               },
               icon: const Icon(
                 FontAwesomeIcons.bucket,

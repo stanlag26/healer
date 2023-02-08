@@ -1,16 +1,13 @@
 import 'dart:io';
-import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:healer/api/awesome_notifications_push/notifications.dart';
 import 'package:healer/entity/course_hive.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../api/main_navigation/main_navigation.dart';
 import '../../../api/my_functions/my_functions.dart';
 import '../../../api/timeofdate/timeofdate.dart';
-import '../../../entity/course.dart';
+import '../../../my_widgets/my_show_dialog.dart';
 import 'hive_courses_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -57,41 +54,6 @@ class CardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final model = context.watch<CoursesModel>();
 
-    Future<void> showMyAlertDialogDelHiveCourse()  {
-      return showDialog<void>(
-        context: context,
-        barrierDismissible: false, // user must tap button!
-        builder: (BuildContext context) {
-          return AlertDialog(
-            backgroundColor: Colors.white,
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: [Text(AppLocalizations.of(context)!.del_recipe)],
-              ),
-            ),
-            actions: <Widget>[
-              TextButton(
-                  child: Text(AppLocalizations.of(context)!.yes,
-                      style: TextStyle(color: Colors.black, fontSize: 15)),
-                  onPressed: () {
-                    model.deleteCourse(indexInList);
-                    Navigator.of(context).pop();
-                  }),
-              TextButton(
-                child: Text(AppLocalizations.of(context)!.no,
-                    style: TextStyle(color: Colors.black, fontSize: 15)),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
-    }
-
-
-
     return Card(
       elevation: 8,
       shadowColor: Colors.black,
@@ -109,7 +71,19 @@ class CardWidget extends StatelessWidget {
           subtitle: Text('${AppLocalizations.of(context)!.time_pills} ${listToString(model.courses[indexInList].timeOfReceipt)}'),
           trailing: IconButton(
               onPressed: () {
-                showMyAlertDialogDelHiveCourse();
+                showDialog<void>(
+                    context: context,
+                    barrierDismissible: false, // user must tap button!
+                    builder: (BuildContext context) {
+                      return MyShowMyAlertDialog(
+                        text: AppLocalizations.of(context)!.del_recipe,
+                        onPressed: () {
+                          model.deleteCourse(indexInList);
+                          Navigator.of(context).pop();
+                        },
+                      );
+                    }
+                );
               },
               icon: const Icon(
                 FontAwesomeIcons.bucket,
