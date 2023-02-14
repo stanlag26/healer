@@ -6,7 +6,9 @@ import 'package:provider/provider.dart';
 
 import '../../../api/main_navigation/main_navigation.dart';
 import '../../../api/my_functions/my_functions.dart';
+import '../../../api/resource/resource.dart';
 import '../../../api/timeofdate/timeofdate.dart';
+import '../../../const/const.dart';
 import '../../../my_widgets/my_show_dialog.dart';
 import 'hive_courses_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -38,11 +40,52 @@ class _CoursesState extends State<Courses> {
   @override
   Widget build(BuildContext context) {
     final model = context.watch<CoursesModel>();
-    return ListView.builder(
-        itemCount: model.courses.length,
-        itemBuilder: (BuildContext context, int index) {
-          return CardWidget(indexInList: index);
-        });
+    return Scaffold(
+      body:
+      (model.courses.isEmpty)
+          ? Container( child:
+        SafeArea(
+          child: ListView(
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Image.asset(
+                    Resource.myCourse,
+                    width: MediaQuery.of(context).size.width / 1.5,
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Text(
+                    AppLocalizations.of(context)!.my_course_info,
+                    style: MyTextStyle.textStyle20,
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ):
+      ListView.builder(
+          itemCount: model.courses.length,
+          itemBuilder: (BuildContext context, int index) {
+            return CardWidget(indexInList: index);
+          }),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.blue,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(23)),
+        onPressed: () {
+          // Navigator.pushNamed(context, MainNavigationRouteNames.recipesAdd);
+        },
+        child: const Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+    );
   }
 }
 

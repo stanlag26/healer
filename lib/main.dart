@@ -5,14 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:healer/ui/navigation/my_navigation.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'entity/course_hive.dart';
-import 'entity/user_hive.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(CourseHiveAdapter());
-  Hive.registerAdapter(UserHiveAdapter());
+  await Hive.openBox('user_box');
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

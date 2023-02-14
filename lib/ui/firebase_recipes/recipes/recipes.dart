@@ -28,8 +28,7 @@ class Recipes extends StatelessWidget {
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return const Center(child: Text(''),
-            );
+            return const Center();
           }
           return ListView.builder(
             itemCount: snapshot.data!.docs.length,

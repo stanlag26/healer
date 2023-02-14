@@ -13,12 +13,18 @@
     "welcome": "Welcome,",
     "welcome_explanation": "to save your data on any devices, please go through the registration",
 
+    "your_name": "Enter a name",
+    "meet": "What's your name?",
+
+    "done": "Done",
+    "skip": "Skip",
+
     "password_reset_text": "Enter your email to reset your password",
     "reset_password": "Reset password",
 
     "healer": "Healer",
-    "my_course": "What I'm drinking now",
-    "recipe": "Recipes in database",
+    "my_course": "My drugs",
+    "recipe": "Recipe archive",
 
     "add_recipe": "Add recipe",
     "namePill": "The name of the tablets",
@@ -33,6 +39,7 @@
     "galery": "Galery",
     "camera": "Camera",
     "cancel": "Cancel",
+    "next": "Next",
 
     "time_pills": "Time to take the pills:",
 

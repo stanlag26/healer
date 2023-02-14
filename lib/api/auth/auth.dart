@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:healer/my_widgets/my_toast.dart';
+import '../hive_api/hive_api.dart';
 import '../main_navigation/main_navigation.dart';
 
 class MyAuth {
@@ -26,8 +27,10 @@ class MyAuth {
       await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
       if (context.mounted) {
-        Navigator.popAndPushNamed(
-            context, MainNavigationRouteNames.main);
+        final routeName = isFirstEntry()
+            ? MainNavigationRouteNames.main
+            : MainNavigationRouteNames.intro;
+        Navigator.popAndPushNamed(context, routeName);
       }
     } on FirebaseAuthException catch (e) {
       _showAuthErrorToast(context, e.message);
@@ -37,6 +40,7 @@ class MyAuth {
   static Future<void> signOut(BuildContext context) async {
     try {
       await _firebaseAuth.signOut();
+      exitApp();
     } on FirebaseAuthException catch (e) {
       _showAuthErrorToast(context, e.message);
     }

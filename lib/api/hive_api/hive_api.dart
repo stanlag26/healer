@@ -14,3 +14,26 @@ Future<void> saveCoursesToHive(Course course) async {
       timeOfReceipt: course.timeOfReceipt);
   await box.add(courseHive);
 }
+
+
+void firstEntryInApp(String name)  {
+  var userBox = Hive.box('user_box');
+  userBox.put('user', name);
+  userBox.put('first_entry', true);
+}
+
+String nameUser()  {
+  var userBox = Hive.box('user_box');
+  return userBox.get('user')?? '';
+}
+
+bool isFirstEntry()  {
+  final userBox = Hive.box('user_box');
+  return userBox.get('first_entry') ?? false;
+}
+
+void exitApp()  {
+  final userBox = Hive.box('user_box');
+  userBox.put('first_entry', false);
+}
+
