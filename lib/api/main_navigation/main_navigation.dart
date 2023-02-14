@@ -7,6 +7,7 @@ abstract class MainNavigationRouteNames {
   static const recipesEdit = 'recipes/edit';
   static const courses = 'courses';
   static const coursesEdit = 'courses/edit';
+  static const info = 'main/info';
 }
 
 

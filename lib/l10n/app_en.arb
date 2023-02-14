@@ -1,6 +1,7 @@
 {
     "error_auth": "Something went wrong :(",
     "no_internet": "No internet connection",
+    "slow_internet": "Download canceled due to slow internet connection, as soon as internet speed improves, your data will be added to the network.",
     "validation": "Not all data entered",
 
 
@@ -19,7 +20,7 @@
 
     "add_recipe": "Add recipe",
     "namePill": "The name of the tablets",
-    "descriptionPill": "Description of tablets",
+    "descriptionPill": "Description of the drug: you can write the number of pills, the conditions for taking (before or after a meal), a description of the drug. ",
     "add_photo": "Add photo of pills",
     "change_photo": "Change photo of pills",
     "add_time_pills": "Add pill time",
@@ -38,5 +39,8 @@
     "disable":"Disable",
     "allow": "Allow",
     "time_medication": "Time of medication:",
-    "logoff": "Are you sure you want to log out of your account?"
+    "logoff": "Are you sure you want to log out of your account?",
+
+    "my_course_info": "This section displays the medications you are currently taking",
+    "recipe_info": "This section displays your recipes that you have taken in the past. Click on this tab and create a new recipe by clicking the plus sign."
 }

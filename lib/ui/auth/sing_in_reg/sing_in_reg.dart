@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../api/auth/auth.dart';
 import '../../../api/main_navigation/main_navigation.dart';
+import '../../../api/my_functions/my_functions.dart';
 import '../../../const/const.dart';
 import '../../../my_widgets/my_button.dart';
 import '../../../my_widgets/my_text_field.dart';
@@ -65,13 +66,13 @@ class RegisterSingIn extends StatelessWidget {
                 model.regOn == false
                     ? MyButton(
                         myText: Text(AppLocalizations.of(context)!.login),
-                        onPress: ()  {
-                          MyAuth.signInWithEmail(context, _loginController.text.trim(), _passwordController.text.trim());
+                        onPress: ()  async {
+                          await MyAuth.signInWithEmail(context, _loginController.text.trim(), _passwordController.text.trim());
                         })
                     : MyButton(
                         myText: Text(AppLocalizations.of(context)!.registration),
-                        onPress: ()  {
-                         MyAuth.registerWithEmail(context, _loginController.text.trim(), _passwordController.text.trim());
+                        onPress: ()  async {
+                          await  MyAuth.registerWithEmail(context, _loginController.text.trim(), _passwordController.text.trim());
                         }),
                 const SizedBox(
                   height: 5,

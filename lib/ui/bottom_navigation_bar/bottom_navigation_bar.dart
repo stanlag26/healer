@@ -1,13 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../api/auth/auth.dart';
 import '../../api/main_navigation/main_navigation.dart';
 import '../../const/const.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import '../../my_widgets/my_show_dialog.dart';
 import '../firebase_recipes/recipes/recipes.dart';
 import '../my_courses/courses/hive_courses.dart';
+import 'package:introduction_screen/introduction_screen.dart';
 
 class MyBottomNavigationBar extends StatefulWidget {
   const MyBottomNavigationBar({Key? key}) : super(key: key);
@@ -29,12 +30,31 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
     setState(() {});
   }
 
+  String? header() {
+    final email = FirebaseAuth.instance.currentUser?.email;
+    if (email == null) {
+      return null;
+    }
+
+    return email.substring(0, email.indexOf('@'));
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading:           IconButton(
+          onPressed: () {
+            Navigator.pushNamed(
+                context, MainNavigationRouteNames.info);
+          },
+          icon: const Icon(
+            FontAwesomeIcons.circleInfo, size: 25,
+          ),
+        ),
         title: Text(
-          AppLocalizations.of(context)!.healer,
+          header() ?? AppLocalizations.of(context)!.healer,
           style: MyTextStyle.textStyle25,
         ),
         centerTitle: true,
@@ -51,14 +71,12 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
                           MyAuth.signOut(context);
                           Navigator.popAndPushNamed(
                               context, MainNavigationRouteNames.singIn);
-                          Navigator.of(context).pop();
                         },
                       );
-                    }
-                );
+                    });
               },
               icon: const Icon(
-                FontAwesomeIcons.arrowRightFromBracket,
+                FontAwesomeIcons.arrowRightFromBracket,size: 20
               )),
         ],
       ),
@@ -66,10 +84,12 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
+            tooltip: AppLocalizations.of(context)!.my_course_info,
             icon: const Icon(FontAwesomeIcons.pills),
             label: AppLocalizations.of(context)!.my_course,
           ),
           BottomNavigationBarItem(
+            tooltip: AppLocalizations.of(context)!.recipe_info,
             icon: const Icon(FontAwesomeIcons.prescriptionBottleMedical),
             label: AppLocalizations.of(context)!.recipe,
           ),

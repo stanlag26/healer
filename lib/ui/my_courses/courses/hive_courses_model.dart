@@ -34,6 +34,7 @@ class CoursesModel extends ChangeNotifier {
     final file = File(course.photoPill);
     file.delete();
     await _box.deleteAt(index);
+    _saveCoursesToPush();
   }
 
   Future<void> _saveCoursesToPush() async {
@@ -53,5 +54,6 @@ class CoursesModel extends ChangeNotifier {
         );
       }
     }
+    print(count);
   }
 }

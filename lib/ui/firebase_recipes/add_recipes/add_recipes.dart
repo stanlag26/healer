@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -32,6 +34,44 @@ class AddRecipes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = context.watch<AddRecipesModel>();
+
+    Future<void> downloadInFirebase() async {
+      if (namePillController.text.isEmpty ||
+          descriptionPillController.text.isEmpty) {
+        if (context.mounted) {
+          myToast(AppLocalizations.of(context)!.validation);
+        }
+        return;
+      }
+      if (context.mounted) {
+        showMyDialogCircular(context);
+      }
+      if (!await checkInternetConnection()) {
+        if (context.mounted) {
+          myToast(AppLocalizations.of(context)!.no_internet);
+          Navigator.pop(context);
+        }
+        return;
+      }
+
+      Timer(const Duration(seconds: 10), () {
+        if (context.mounted) {
+          Navigator.pop(context);
+
+          myToast(AppLocalizations.of(context)!.slow_internet);
+        }
+      });
+
+      if (context.mounted) {
+        await model.completeCourseAndToFirebase(context);
+      }
+
+      if (context.mounted) {
+        Navigator.of(context, rootNavigator: true).pop();
+        Navigator.pop(context);
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
           title: Text(
@@ -41,21 +81,7 @@ class AddRecipes extends StatelessWidget {
           actions: [
             IconButton(
                 onPressed: () async {
-                  if (await checkInternetConnection() != true) {
-                    if (context.mounted) myToast(AppLocalizations.of(context)!.no_internet);
-                    return;
-                  }
-                  if (namePillController.text.isEmpty ||
-                      descriptionPillController.text.isEmpty ||
-                      model.pickedFile == null) {
-                    if (context.mounted) myToast(AppLocalizations.of(context)!.validation);
-                    return;
-                  }
-                  if (context.mounted) showMyDialogCircular(context);
-                  if (context.mounted)  await model.completeCourseAndToFirebase(context);
-
-                  if (context.mounted) Navigator.of(context, rootNavigator: true).pop();
-                  if (context.mounted) Navigator.pop(context);
+                  downloadInFirebase();
                 },
                 icon: const Icon(
                   FontAwesomeIcons.floppyDisk,
@@ -77,7 +103,7 @@ class AddRecipes extends StatelessWidget {
               onChanged: (value) => model.descriptionPill = value,
               hintTextField: AppLocalizations.of(context)!.descriptionPill,
               controller: descriptionPillController,
-              maxLine: 3,
+              maxLine: 5,
             ),
             const SizedBox(
               height: 15,

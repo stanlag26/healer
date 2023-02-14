@@ -10,6 +10,7 @@ import '../bottom_navigation_bar/bottom_navigation_bar.dart';
 import '../firebase_recipes/add_recipes/add_recipes.dart';
 import '../firebase_recipes/edit_recipe/edit_recipe.dart';
 import '../firebase_recipes/recipes/recipes.dart';
+import '../info/info.dart';
 import '../my_courses/courses/hive_courses.dart';
 import '../my_courses/one_course/one_course.dart';
 
@@ -44,6 +45,7 @@ class MyNavigation extends StatelessWidget {
         MainNavigationRouteNames.recipesEdit: (context) => const EditRecipesProviderWidget(),
         MainNavigationRouteNames.courses: (context) => const CoursesProviderWidget(),
         MainNavigationRouteNames.coursesEdit: (context) => const OneCourse(),
+        MainNavigationRouteNames.info: (context) => const IntroductionScreens()
       },
     );
   }

@@ -89,7 +89,7 @@ class CardWidget extends StatelessWidget {
                 color: Colors.blue,
               )),
           title: Text(course.namePill),
-          subtitle: Text('${AppLocalizations.of(context)!.time_pills} ${listToString(course.timeOfReceipt)}'),
+          subtitle: Text('${AppLocalizations.of(context)!.time_medication} ${listToString(course.timeOfReceipt)}'),
           trailing: IconButton(
               onPressed: () {
                 showDialog<void>(
