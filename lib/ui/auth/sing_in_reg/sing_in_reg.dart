@@ -6,6 +6,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../api/auth/auth.dart';
 import '../../../api/main_navigation/main_navigation.dart';
 import '../../../api/my_functions/my_functions.dart';
+import '../../../api/resource/resource.dart';
 import '../../../const/const.dart';
 import '../../../my_widgets/my_button.dart';
 import '../../../my_widgets/my_text_field.dart';
@@ -39,10 +40,22 @@ class RegisterSingIn extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(
-                  height: 40,
+                  height: 10,
                 ),
-                Text(model.regOn == false ? AppLocalizations.of(context)!.login : AppLocalizations.of(context)!.registration,
-                    style:MyTextStyle.textStyle20Bold),
+                Text(
+                  AppLocalizations.of(context)!.welcome,
+                  style:MyTextStyle.textStyle25Bolt,
+                  textAlign: TextAlign.center,),
+                Image.asset(Resource.logoWithoutBackground,
+                width: MediaQuery.of(context).size.width/2.5,
+                ),
+                Text(
+                  AppLocalizations.of(context)!.welcome_explanation,
+                  style:MyTextStyle.textStyle20Bold,
+                  textAlign: TextAlign.center,),
+                const SizedBox(
+                  height: 20,
+                ),
                 MyTextField(
                   hintTextField: AppLocalizations.of(context)!.mail,
                   controller: _loginController, mask: false,

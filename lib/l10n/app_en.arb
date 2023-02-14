@@ -9,7 +9,9 @@
     "mail": "Email",
     "password": "Password",
     "registration": "Registration",
-    "forgot_password": "Forgot password",
+    "forgot_password": "Forgot password?",
+    "welcome": "Welcome,",
+    "welcome_explanation": "to save your data on any devices, please go through the registration",
 
     "password_reset_text": "Enter your email to reset your password",
     "reset_password": "Reset password",
