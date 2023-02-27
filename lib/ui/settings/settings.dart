@@ -1,50 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:settings_ui/settings_ui.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../api/auth/auth.dart';
+import '../../api/hive_api/hive_api.dart';
+import '../../api/main_navigation/main_navigation.dart';
+import '../../my_widgets/my_show_dialog.dart';
 
-class Settings extends StatefulWidget {
-  @override
-  _SettingsState createState() => _SettingsState();
-}
 
-class _SettingsState extends State<Settings> {
-  String _userName = 'John Doe';
-
+class Settings extends StatelessWidget {
+  const Settings({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'),
+        title: Text(AppLocalizations.of(context)!.settings),
       ),
       body: SettingsList(
         sections: [
           SettingsSection(
-            title: Text('User Settings'),
+            title: Text(AppLocalizations.of(context)!.name),
             tiles: [
               SettingsTile(
-                title: Text('User Name'),
+                title: Text(nameUser(),),
                 leading: Icon(Icons.person),
-                onPressed: (BuildContext context) async {
-                  final result = await showDialog(
-                    context: context,
-                    builder: (_) => UserNameDialog(initialValue: _userName),
-                  );
-                  if (result != null) {
-                    setState(() {
-                      _userName = result;
-                    });
-                  }
+                onPressed: (BuildContext context)  {
                 },
               ),
             ],
           ),
           SettingsSection(
-            title: Text('Account'),
+            title: Text(AppLocalizations.of(context)!.account),
             tiles: [
               SettingsTile(
-                title: Text('Exit'),
-                leading: Icon(Icons.exit_to_app),
+                title: Text(AppLocalizations.of(context)!.exit),
+                leading: const Icon(Icons.exit_to_app),
                 onPressed: (BuildContext context) {
-                  // Perform the action to exit the app
+                  showDialog<void>(
+                      context: context,
+                      barrierDismissible: false, // user must tap button!
+                      builder: (BuildContext context) {
+                        return MyShowMyAlertDialog(
+                          text: AppLocalizations.of(context)!.logoff,
+                          onPressed: () {
+                            MyAuth.signOut(context);
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              MainNavigationRouteNames.singIn,
+                                  (route) => false,
+                            );
+                          },
+                        );
+                      });
                 },
               ),
             ],
@@ -55,54 +61,3 @@ class _SettingsState extends State<Settings> {
   }
 }
 
-class UserNameDialog extends StatefulWidget {
-  final String initialValue;
-
-  UserNameDialog({required this.initialValue});
-
-  @override
-  _UserNameDialogState createState() => _UserNameDialogState();
-}
-
-class _UserNameDialogState extends State<UserNameDialog> {
-  late TextEditingController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = TextEditingController(text: widget.initialValue);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text('User Name'),
-      content: TextField(
-        controller: _controller,
-        decoration: InputDecoration(
-          hintText: 'Enter your name',
-        ),
-      ),
-      actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Text('CANCEL'),
-        ),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context, _controller.text);
-          },
-          child: Text('SAVE'),
-        ),
-      ],
-    );
-  }
-}

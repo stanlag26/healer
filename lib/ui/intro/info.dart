@@ -49,8 +49,11 @@ class Intro extends StatelessWidget {
                       myToast(AppLocalizations.of(context)!.validation);
                     } else {
                       firstEntryInApp(nameUser.text);
-                      Navigator.popAndPushNamed(
-                          context, MainNavigationRouteNames.main);
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        MainNavigationRouteNames.main,
+                            (route) => false,
+                      );
                     }
                   },
                 ),

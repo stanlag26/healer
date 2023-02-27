@@ -12,7 +12,7 @@ class CourseHive extends HiveObject {
   late final String descriptionPill;
 
   @HiveField(2)
-  late final String photoPill;
+  String? photoPill;
 
   @HiveField(3)
   late final List <String> timeOfReceipt;

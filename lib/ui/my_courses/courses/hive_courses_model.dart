@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'dart:io';
 import '../../../api/awesome_notifications_push/notifications.dart';
+import '../../../api/resource/resource.dart';
 
 
 
@@ -31,8 +32,10 @@ class CoursesModel extends ChangeNotifier {
 
   Future <void> deleteCourse(int index) async {
     final course = _box.getAt(index) as CourseHive;
-    final file = File(course.photoPill);
-    file.delete();
+    if(course.photoPill!=null) {
+      final file = File(course.photoPill!);
+      file.delete();
+    }
     await _box.deleteAt(index);
     _saveCoursesToPush();
   }
@@ -48,7 +51,9 @@ class CoursesModel extends ChangeNotifier {
             notificationId: count++,
             name: course.namePill,
             description: course.descriptionPill,
-            photo: course.photoPill,
+            photo: (course.photoPill==null)
+                ? 'asset://${Resource.pills}'
+                :'file://${course.photoPill}',
             hour: int.parse(timeSplit[0]),
             minute: int.parse(timeSplit[1])
         );

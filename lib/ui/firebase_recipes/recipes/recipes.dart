@@ -78,7 +78,7 @@ class CardWidget extends StatelessWidget {
                 return;
                 }
                 if (context.mounted) showMyDialogCircular(context);
-             await saveCoursesToHive(course);
+             await saveCoursesToHiveFromFirebase(course);
                 if (context.mounted)Navigator.of(context, rootNavigator: true).pop();
                 // if (context.mounted) Navigator.of(context).pop();
                 if (context.mounted) Navigator.popAndPushNamed(context, MainNavigationRouteNames.main);

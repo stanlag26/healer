@@ -41,6 +41,12 @@
     "cancel": "Cancel",
     "next": "Next",
 
+
+    "settings": "Settings",
+    "name": "Name",
+    "account": "Account",
+    "exit": "Exit",
+
     "time_pills": "Time to take the pills:",
 
     "allow_notifications": "Allow Notifications",

@@ -23,7 +23,7 @@ class NotificationService {
       channelKey: 'basic_channel',
       title: name,
       body: description,
-      bigPicture: 'file://$photo',
+      bigPicture: photo,
       notificationLayout: NotificationLayout.BigPicture,
       wakeUpScreen: true,
       autoDismissible:false,

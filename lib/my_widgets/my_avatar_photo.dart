@@ -20,7 +20,7 @@ class MyAvatarPhoto extends StatelessWidget {
             borderRadius: BorderRadius.circular(30),
             child: SizedBox.fromSize(
               size: Size.fromRadius(100), // Image radius
-              child: photo, //Image.file(File(avatar), fit: BoxFit.cover),
+              child: photo,
             ),
           ),
         ),

@@ -19,7 +19,7 @@ class CourseHiveAdapter extends TypeAdapter<CourseHive> {
     return CourseHive(
       namePill: fields[0] as String,
       descriptionPill: fields[1] as String,
-      photoPill: fields[2] as String,
+      photoPill: fields[2] as String?,
       timeOfReceipt: (fields[3] as List).cast<String>(),
     );
   }

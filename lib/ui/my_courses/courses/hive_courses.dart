@@ -3,7 +3,7 @@ import 'package:healer/entity/course_hive.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-
+import 'package:getwidget/getwidget.dart';
 import '../../../api/main_navigation/main_navigation.dart';
 import '../../../api/my_functions/my_functions.dart';
 import '../../../api/resource/resource.dart';
@@ -43,34 +43,32 @@ class _CoursesState extends State<Courses> {
     return Scaffold(
       body:
       (model.courses.isEmpty)
-          ? Container( child:
-        SafeArea(
-          child: ListView(
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Image.asset(
-                    Resource.myCourse,
-                    width: MediaQuery.of(context).size.width / 1.5,
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Text(
-                    AppLocalizations.of(context)!.my_course_info,
-                    style: MyTextStyle.textStyle20,
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ):
+          ? SafeArea(
+            child: ListView(
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Image.asset(
+                      Resource.myCourse,
+                      width: MediaQuery.of(context).size.width / 1.5,
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Text(
+                      AppLocalizations.of(context)!.my_course_info,
+                      style: MyTextStyle.textStyle20,
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ):
       ListView.builder(
           itemCount: model.courses.length,
           itemBuilder: (BuildContext context, int index) {
@@ -80,7 +78,7 @@ class _CoursesState extends State<Courses> {
         backgroundColor: Colors.blue,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(23)),
         onPressed: () {
-          // Navigator.pushNamed(context, MainNavigationRouteNames.recipesAdd);
+          Navigator.pushNamed(context, MainNavigationRouteNames.coursesAdd);
         },
         child: const Icon(Icons.add),
       ),
@@ -104,11 +102,12 @@ class CardWidget extends StatelessWidget {
           tileColor: Colors.white,
           onTap: () {
             CourseHive courseHive = model.courses[indexInList];
-            Navigator.pushNamed(context, MainNavigationRouteNames.coursesEdit, arguments: courseHive);
+            Navigator.pushNamed(context, MainNavigationRouteNames.coursesEdit, arguments: [indexInList,courseHive]);
           },
-          leading: ClipRRect(
-            borderRadius: BorderRadius.circular(8.0),
-            child: Image.file(File(model.courses[indexInList].photoPill)),
+          leading: GFAvatar(
+            backgroundImage: (model.courses[indexInList].photoPill != null)
+                ? FileImage(File(model.courses[indexInList].photoPill!))
+                : const AssetImage(Resource.pills) as ImageProvider
           ),
           title: Text(model.courses[indexInList].namePill),
           subtitle: Text('${AppLocalizations.of(context)!.time_pills} ${listToString(model.courses[indexInList].timeOfReceipt)}'),
@@ -130,7 +129,7 @@ class CardWidget extends StatelessWidget {
               },
               icon: const Icon(
                 FontAwesomeIcons.bucket,
-                color: Colors.deepOrange,
+                color: Colors.blue,
               ))),
     );
   }

@@ -11,8 +11,9 @@ import '../firebase_recipes/add_recipes/add_recipes.dart';
 import '../firebase_recipes/edit_recipe/edit_recipe.dart';
 import '../firebase_recipes/recipes/recipes.dart';
 import '../intro/info.dart';
+import '../my_courses/add_courses/add_courses.dart';
 import '../my_courses/courses/hive_courses.dart';
-import '../my_courses/one_course/one_course.dart';
+import '../my_courses/edit_courses/edit_courses.dart';
 import '../settings/settings.dart';
 
 class MyNavigation extends StatelessWidget {
@@ -47,9 +48,10 @@ class MyNavigation extends StatelessWidget {
         MainNavigationRouteNames.recipesAdd: (context) => const AddRecipesProviderWidget(),
         MainNavigationRouteNames.recipesEdit: (context) => const EditRecipesProviderWidget(),
         MainNavigationRouteNames.courses: (context) => const CoursesProviderWidget(),
-        MainNavigationRouteNames.coursesEdit: (context) => const OneCourse(),
+        MainNavigationRouteNames.coursesAdd: (context) => const AddCoursesProviderWidget(),
+        MainNavigationRouteNames.coursesEdit: (context) => const EditCoursesProviderWidget(),
         MainNavigationRouteNames.intro: (context) => const Intro(),
-        MainNavigationRouteNames.settings: (context) =>  Settings(),
+        MainNavigationRouteNames.settings: (context) =>  const Settings(),
 
       },
     );
