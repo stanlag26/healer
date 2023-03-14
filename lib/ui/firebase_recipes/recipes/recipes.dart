@@ -1,19 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../api/firebase_api/firebase_api.dart';
 import '../../../api/hive_api/hive_api.dart';
 import '../../../api/internet_connection/internet_connection.dart';
 import '../../../api/main_navigation/main_navigation.dart';
+import '../../../api/resource/resource.dart';
 import '../../../api/timeofdate/timeofdate.dart';
+import '../../../const/const.dart';
 import '../../../entity/course.dart';
 import '../../../api/my_functions/my_functions.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../my_widgets/my_show_dialog.dart';
 import '../../../my_widgets/my_toast.dart';
-
 
 class Recipes extends StatelessWidget {
   const Recipes({Key? key}) : super(key: key);
@@ -41,15 +41,6 @@ class Recipes extends StatelessWidget {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blue,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(23)),
-        onPressed: () {
-          Navigator.pushNamed(context, MainNavigationRouteNames.recipesAdd);
-        },
-        child: const Icon(Icons.add),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
@@ -62,53 +53,116 @@ class CardWidget extends StatelessWidget {
   final Course course;
   @override
   Widget build(BuildContext context) {
-
     return Card(
+      margin: const EdgeInsets.all(10.0),
       elevation: 8,
       shadowColor: Colors.black,
-      child: ListTile(
-          tileColor: Colors.white,
-          onTap: () {
-            Navigator.pushNamed(context, MainNavigationRouteNames.recipesEdit, arguments: course);
-          },
-          leading:  IconButton(
-              onPressed: () async {
-                if (await checkInternetConnection() != true) {
-                  if (context.mounted) myToast(AppLocalizations.of(context)!.no_internet);
-                return;
-                }
-                if (context.mounted) showMyDialogCircular(context);
-             await saveCoursesToHiveFromFirebase(course);
-                if (context.mounted)Navigator.of(context, rootNavigator: true).pop();
-                // if (context.mounted) Navigator.of(context).pop();
-                if (context.mounted) Navigator.popAndPushNamed(context, MainNavigationRouteNames.main);
-              },
-              icon: const Icon(
-                FontAwesomeIcons.plus,
-                color: Colors.blue,
-              )),
-          title: Text(course.namePill),
-          subtitle: Text('${AppLocalizations.of(context)!.time_medication} ${listToString(course.timeOfReceipt)}'),
-          trailing: IconButton(
-              onPressed: () {
-                showDialog<void>(
-                    context: context,
-                    barrierDismissible: false, // user must tap button!
-                    builder: (BuildContext context) {
-                      return MyShowMyAlertDialog(
-                        text: AppLocalizations.of(context)!.del_recipe,
-                        onPressed: () {
-                          FireBaseFirestoreApi().delCourse(context,course);
-                          Navigator.of(context).pop();
-                        },
-                      );
-                    }
-                );
-              },
-              icon: const Icon(
-                FontAwesomeIcons.bucket,
-                color: Colors.deepOrange,
-              ))),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          (course.photoPill != null)
+              ? Image.network(
+                  course.photoPill!,
+                  width: double.infinity,
+                  height: 150,
+                  fit: BoxFit.cover,
+                )
+              : Image.asset(
+                  Resource.pills,
+                  width: double.infinity,
+                  height: 150,
+                  fit: BoxFit.cover,
+                ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(course.namePill, style: MyTextStyle.textStyle20Bold),
+                const SizedBox(height: 5),
+                Text(course.descriptionPill, style: MyTextStyle.textStyle15),
+                const SizedBox(height: 5),
+                Text(
+                    '${AppLocalizations.of(context)!.time_medication} ${listToString(course.timeOfReceipt)}',
+                    style: MyTextStyle.textStyle15),
+                const SizedBox(height: 5),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () async {
+                        if (await checkInternetConnection() != true) {
+                          if (context.mounted) {
+                            myToast(AppLocalizations.of(context)!.no_internet);
+                          }
+                          return;
+                        }
+                        if (context.mounted) showMyDialogCircular(context);
+                        await saveCoursesToHiveFromFirebase(course);
+                        if (context.mounted) {
+                          Navigator.of(context, rootNavigator: true).pop();
+                        }
+                        if (context.mounted) {
+                          Navigator.popAndPushNamed(
+                              context, MainNavigationRouteNames.main);
+                        }
+                      },
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Colors.blue),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            side: const BorderSide(
+                              color: Colors.grey,
+                              width: 0.5,
+                            ),
+                          ),
+                        ),
+                      ),
+                      child: Text(AppLocalizations.of(context)!.add_recipe),
+                    ),
+                    SizedBox(width: 8),
+                    ElevatedButton(
+                      onPressed: () {
+                        showDialog<void>(
+                            context: context,
+                            barrierDismissible: false, // user must tap button!
+                            builder: (BuildContext context) {
+                              return MyShowMyAlertDialog(
+                                text: AppLocalizations.of(context)!.del_recipe,
+                                onPressed: () {
+                                  FireBaseFirestoreApi()
+                                      .delCourse(context, course);
+                                  Navigator.of(context).pop();
+                                },
+                              );
+                            });
+                      },
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Colors.red),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            side: const BorderSide(
+                              color: Colors.grey,
+                              width: 0.5,
+                            ),
+                          ),
+                        ),
+                      ),
+                      child: Text(AppLocalizations.of(context)!.del_recipe),
+                    ),
+                    SizedBox(width: 8),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

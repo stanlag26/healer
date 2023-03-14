@@ -24,7 +24,9 @@
 
     "healer": "Healer",
     "my_course": "My drugs",
-    "recipe": "Recipe archive",
+    "recipe": "Drug archive",
+    "add_recipe_to_archive": "Save the medicine in the database?",
+
 
     "add_recipe": "Add recipe",
     "namePill": "The name of the tablets",
@@ -33,7 +35,8 @@
     "change_photo": "Change photo of pills",
     "add_time_pills": "Add pill time",
 
-    "del_recipe": "Delete recipe?",
+    "del_recipe": "Delete medicine?",
+    "del": "Delete",
     "yes": "Yes",
     "no": "No",
     "galery": "Galery",

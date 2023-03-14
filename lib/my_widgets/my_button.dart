@@ -26,7 +26,7 @@ class MyButton extends StatelessWidget {
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0),
               side: const BorderSide(
-                color: Colors.black,
+                color: Colors.grey,
                 width: 0.5,
               ),
             ),

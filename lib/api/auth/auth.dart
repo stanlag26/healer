@@ -27,10 +27,7 @@ class MyAuth {
       await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
       if (context.mounted) {
-        final routeName = isFirstEntry()
-            ? MainNavigationRouteNames.main
-            : MainNavigationRouteNames.intro;
-        Navigator.popAndPushNamed(context, routeName);
+        Navigator.popAndPushNamed(context, MainNavigationRouteNames.intro);
       }
     } on FirebaseAuthException catch (e) {
       _showAuthErrorToast(context, e.message);
@@ -40,7 +37,6 @@ class MyAuth {
   static Future<void> signOut(BuildContext context) async {
     try {
       await _firebaseAuth.signOut();
-      exitApp();
     } on FirebaseAuthException catch (e) {
       _showAuthErrorToast(context, e.message);
     }

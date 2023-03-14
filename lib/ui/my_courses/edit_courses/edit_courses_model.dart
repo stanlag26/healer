@@ -7,26 +7,38 @@ import 'package:flutter/material.dart';
 import 'package:healer/entity/course_hive.dart';
 import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 import '../../../api/firebase_api/firebase_api.dart';
+import '../../../api/hive_api/hive_api.dart';
+import '../../../api/timeofdate/timeofdate.dart';
 import '../../../entity/course.dart';
 
 class EditCoursesModel extends ChangeNotifier{
   late String namePill;
   late String descriptionPill;
   String? photoPill;
+  String? oldPhotoPill;
   List<String> timeOfReceipt = [];
   var tumbler = false;
   XFile? pickedFile;
 
 
+  Future<void> saveEditCoursesToHive(int index) async {
+    await _saveImageFromCashToAppDocDir(pickedFile);
+    saveEditCourse(
+        index,
+        CourseHive(
+            namePill: namePill,
+            descriptionPill: descriptionPill,
+            photoPill: photoPill,
+            timeOfReceipt: timeOfReceipt));
+  }
+
   /////////////////////////////////
   void addTime(BuildContext context) async {
-    final timeOfDay = await showTimePicker(
-        context: context,
-        initialTime: TimeOfDay.now(),
-        initialEntryMode: TimePickerEntryMode.dial);
-    if (timeOfDay != null) {
-      timeOfReceipt.add('${timeOfDay.hour}:${timeOfDay.minute}');
+    final time = await formatTime(context);
+    if (time != null) {
+      timeOfReceipt.add(time);
       notifyListeners();
     }
   }
@@ -38,7 +50,7 @@ class EditCoursesModel extends ChangeNotifier{
 
 
 //меню выбора
-  void myShowAdaptiveActionSheet(BuildContext context) {
+  void myShowAdaptiveActionSheet(BuildContext context)  {
     showAdaptiveActionSheet(
       context: context,
       title: const Text('Добавить фото'),
@@ -98,10 +110,30 @@ class EditCoursesModel extends ChangeNotifier{
     ));
     if (pickedFile != null) {
       photoPill = pickedFile!.path;
+      print(photoPill);
       tumbler = true;
       notifyListeners();
     } else {
       return;
+    }
+  }
+
+  Future <void> _saveImageFromCashToAppDocDir(XFile? pickedFile) async {
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+
+
+    String appDocPath = appDocDir.path;
+    if (pickedFile != null) {
+      String fileName = pickedFile.name;
+      String filePath = '$appDocPath/$fileName';
+      photoPill = filePath;
+      File(pickedFile.path).copySync(filePath);
+      if (oldPhotoPill != photoPill){
+        File(oldPhotoPill!).delete();
+      }
+      File(pickedFile.path).delete();
+    } else {
+      photoPill = null ;
     }
   }
 }

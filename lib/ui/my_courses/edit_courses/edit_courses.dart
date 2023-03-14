@@ -13,6 +13,7 @@ import '../../../entity/course.dart';
 import '../../../my_widgets/my_avatar_photo.dart';
 import '../../../my_widgets/my_button.dart';
 import '../../../my_widgets/my_text_field.dart';
+import '../../../my_widgets/my_time_interval.dart';
 import '../../../my_widgets/my_toast.dart';
 import 'edit_courses_model.dart';
 
@@ -37,16 +38,20 @@ class EditRecipes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = context.watch<EditCoursesModel>();
+
     int listIndex = list[0];
     CourseHive courseHive = list[1];
-    model.namePill = courseHive.namePill;
-    model.photoPill = courseHive.photoPill;
-    model.descriptionPill = courseHive.descriptionPill;
-    model.timeOfReceipt = courseHive.timeOfReceipt;
+    if (!model.tumbler){
+     model.namePill = courseHive.namePill;
+     model.photoPill = courseHive.photoPill;
+     model.oldPhotoPill = courseHive.photoPill;
+     model.descriptionPill = courseHive.descriptionPill;
+     model.timeOfReceipt = courseHive.timeOfReceipt;
+    }
     final TextEditingController namePillController =
-        TextEditingController(text: model.namePill);
+    TextEditingController(text: model.namePill);
     final TextEditingController descriptionPillController =
-        TextEditingController(text: model.descriptionPill);
+    TextEditingController(text: model.descriptionPill);
     return Scaffold(
       appBar: AppBar(
           title: Text(
@@ -56,19 +61,13 @@ class EditRecipes extends StatelessWidget {
           actions: [
             IconButton(
                 onPressed: ()  {
-                  if (namePillController.text.isEmpty &&
-                      descriptionPillController.text.isEmpty &&
+                  if (namePillController.text.isEmpty ||
+                      descriptionPillController.text.isEmpty ||
                       model.timeOfReceipt.isEmpty) {
                      myToast(AppLocalizations.of(context)!.validation);
                     return;
                   }
-                  saveEditCourse(
-                      listIndex,
-                      CourseHive(
-                          namePill: model.namePill,
-                          descriptionPill: model.descriptionPill,
-                          photoPill: model.photoPill,
-                          timeOfReceipt: model.timeOfReceipt) );
+                  model.saveEditCoursesToHive(listIndex);
                  Navigator.pop(context);
                 },
                 icon: const Icon(
@@ -98,15 +97,15 @@ class EditRecipes extends StatelessWidget {
             ),
             MyButton(
                 myText: Text(AppLocalizations.of(context)!.change_photo),
-                onPress: () {
-                  model.myShowAdaptiveActionSheet(context);
+                onPress: (){
+                model.myShowAdaptiveActionSheet(context);
                 }),
             const SizedBox(
               height: 10,
             ),
                 MyAvatarPhoto(
                 photo: model.photoPill==null
-                    ? Image.asset(Resource.pills)
+                    ? Image.asset(Resource.pills, fit: BoxFit.cover)
                     :Image.file(File(model.photoPill!), fit: BoxFit.cover)),
             const SizedBox(
               height: 10,
@@ -120,33 +119,21 @@ class EditRecipes extends StatelessWidget {
               height: 10,
             ),
             SizedBox(
-              height: 300,
-              child: ListView.builder(
-                  itemCount: model.timeOfReceipt.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Card(
-                        elevation: 4.0,
-                        child: Column(
-                          children: [
-                            ListTile(
-                                leading: const Icon(FontAwesomeIcons.clock),
-                                title: Text(model.timeOfReceipt[index].toString()),
-                                trailing: IconButton(
-                                  onPressed: () {
-                                    model.delTime(index);
-                                  },
-                                  icon: const Icon(
-                                    FontAwesomeIcons.trash,
-                                    color: Colors.red,
-                                  ),
-                                )),
-                          ],
-                        ));
-                  }),
-            ),
+                height: 300,
+                child: ListView.builder(
+                    itemCount: model.timeOfReceipt.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return MyTimeInterval(
+                        count: model.timeOfReceipt.length,
+                        titleText: model.timeOfReceipt[index],
+                        onPress: () {model.delTime(index);},
+                      );
+                    })),
           ],
         ),
       ),
     );
   }
 }
+
+

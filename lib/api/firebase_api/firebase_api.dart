@@ -34,9 +34,9 @@ class FireBaseFirestoreApi {
   Future<void> delCourse(BuildContext context, Course course) async {
     try {
       await _db.collection('Course').doc(course.idDoc).delete();
-      final desertRef = _storage.ref().child(
-          'images/${course.namePhotoPillInStorage}');
-      if (desertRef.name != 'pills.jpg') {
+      if (course.photoPill != null) {
+        final desertRef = _storage.ref().child(
+            'images/${course.namePhotoPillInStorage}');
         await desertRef.delete();
       }
     } on FirebaseException catch (e) {
@@ -58,16 +58,15 @@ class FireBaseFirestoreApi {
 class FireBaseStorageApi {
   final FirebaseStorage _storage = FirebaseStorage.instance;
 
-  Future<String> loadImageOnStorage(XFile? pickedFile) async {
+  Future<String?> loadImageOnStorage(XFile? pickedFile) async {
     final referenceDirImage = _storage.ref().child('images');
     if (pickedFile != null) {
       final referenceImageToUpload = referenceDirImage.child(pickedFile.name);
       await referenceImageToUpload.putFile(File(pickedFile.path));
-      File(pickedFile.path).delete();
       String photoPill = await referenceImageToUpload.getDownloadURL();
       return photoPill;
     } else {
-      return defaultImage;
+      return null;
     }
   }
 
@@ -83,13 +82,15 @@ class FireBaseStorageApi {
       return photoPill;
     }
 
-    Future downloadFile(String namePhotoPillInStorage) async {
+    Future downloadFile(String? namePhotoPillInStorage) async {
+    if(namePhotoPillInStorage !=null) {
       final ref = _storage.ref().child('images/$namePhotoPillInStorage');
       final dir = await getApplicationDocumentsDirectory();
       final file = File('${dir.path}/${ref.name}');
       await ref.writeToFile(file);
       return '${dir.path}/${ref.name}';
-
+    }
+    return null;
     }
   }
 

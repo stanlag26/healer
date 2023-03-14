@@ -9,8 +9,8 @@ class Course{
   late final String idUser;
   late final String namePill;
   late final String descriptionPill;
-  late final String photoPill;
-  late final String namePhotoPillInStorage;
+  String? photoPill;
+  String? namePhotoPillInStorage;
   late final List <String> timeOfReceipt;
 
   Course({
@@ -30,6 +30,6 @@ factory Course.fromJson(Map<String, dynamic> json) => _$CourseFromJson(json);
 
   Map<String, dynamic> toJson() => _$CourseToJson(this);
 
-
+//flutter pub run build_runner build
 
   }

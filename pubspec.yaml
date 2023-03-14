@@ -57,7 +57,6 @@ dependencies:
   internet_connection_checker: ^1.0.0+1
   device_preview: ^1.1.0
   intl: ^0.17.0
-  getwidget: ^3.0.1
   settings_ui: ^2.0.2
 
 
@@ -124,3 +123,5 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+flutter_intl:
+  enabled: true

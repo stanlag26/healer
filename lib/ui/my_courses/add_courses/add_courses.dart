@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:getwidget/components/image/gf_image_overlay.dart';
 import 'package:healer/api/internet_connection/internet_connection.dart';
 import 'package:healer/api/resource/resource.dart';
+import 'package:healer/my_widgets/my_show_dialog.dart';
 import 'package:provider/provider.dart';
 import '../../../api/hive_api/hive_api.dart';
 import '../../../const/const.dart';
@@ -13,6 +13,7 @@ import '../../../my_widgets/my_avatar_photo.dart';
 import '../../../my_widgets/my_button.dart';
 import '../../../api/my_functions/my_functions.dart';
 import '../../../my_widgets/my_text_field.dart';
+import '../../../my_widgets/my_time_interval.dart';
 import '../../../my_widgets/my_toast.dart';
 import 'add_courses_model.dart';
 import 'dart:io';
@@ -46,15 +47,32 @@ class AddCourses extends StatelessWidget {
           ),
           actions: [
             IconButton(
-                onPressed: () {
+                onPressed: () async {
                   if (namePillController.text.isEmpty ||
-                      descriptionPillController.text.isEmpty) {
-                    if (context.mounted) {
-                      myToast(AppLocalizations.of(context)!.validation);
-                    }
-                  } else{
-                    model.saveCoursesToHive();
-                    Navigator.pop(context);
+                      descriptionPillController.text.isEmpty ||
+                      model.timeOfReceipt.isEmpty) {
+                    myToast(AppLocalizations.of(context)!.validation);
+                    return;
+                  } else {
+                    model.saveNewCoursesToHive();
+                  await  showDialog<void>  (
+                        context: context,
+                        barrierDismissible: false, // user must tap button!
+                        builder: (BuildContext context) {
+                          return MyShowMyAlertDialog(
+                            text: AppLocalizations.of(context)!.add_recipe_to_archive,
+                            onPressed: () async {
+                              if (context.mounted) showMyDialogCircular(context);
+                              if (context.mounted)  await model.completeCourseAndToFirebase(context);
+
+                              if (context.mounted) Navigator.of(context, rootNavigator: true).pop();
+                              if (context.mounted) Navigator.pop(context);
+                            },
+                          );
+                        });
+                    if (context.mounted) Navigator.pop(context);
+                    final pickedFile = model.pickedFile;
+                    if (pickedFile != null) File(pickedFile.path).delete();
                   }
                 },
                 icon: const Icon(
@@ -94,9 +112,9 @@ class AddCourses extends StatelessWidget {
             ),
             model.tumbler == true
                 ? MyAvatarPhoto(
-                    photo:model.photoPill==null
+                    photo: model.photoPill == null
                         ? Image.asset(Resource.pills)
-                    :Image.file(File(model.photoPill!), fit: BoxFit.cover))
+                        : Image.file(File(model.photoPill!), fit: BoxFit.cover))
                 : Container(),
             const SizedBox(
               height: 10,
@@ -110,33 +128,20 @@ class AddCourses extends StatelessWidget {
               height: 10,
             ),
             SizedBox(
-              height: 300,
-              child: ListView.builder(
-                  itemCount: model.timeOfReceipt.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Card(
-                        elevation: 4.0,
-                        child: Column(
-                          children: [
-                            ListTile(
-                                leading: const Icon(FontAwesomeIcons.clock),
-                                title: Text(model.timeOfReceipt[index]),
-                                trailing: IconButton(
-                                  onPressed: () {
-                                    model.delTime(index);
-                                  },
-                                  icon: const Icon(
-                                    FontAwesomeIcons.trash,
-                                    color: Colors.red,
-                                  ),
-                                )),
-                          ],
-                        ));
-                  }),
-            ),
+                height: 300,
+                child: ListView.builder(
+                    itemCount: model.timeOfReceipt.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return MyTimeInterval(
+                        count: model.timeOfReceipt.length,
+                        titleText: model.timeOfReceipt[index],
+                        onPress: () {model.delTime(index);},
+                      );
+                    })),
           ],
         ),
       ),
     );
   }
 }
+

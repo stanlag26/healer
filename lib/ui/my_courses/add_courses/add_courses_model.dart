@@ -1,14 +1,18 @@
 
 import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 import '../../../api/firebase_api/firebase_api.dart';
+import '../../../api/hive_api/hive_api.dart';
+import '../../../api/timeofdate/timeofdate.dart';
 import '../../../entity/course.dart';
 import '../../../entity/course_hive.dart';
 
 class AddCoursesModel extends ChangeNotifier {
+  final userId = FirebaseAuth.instance.currentUser?.uid;
   late String namePill;
   late String descriptionPill;
   List<String> timeOfReceipt = [];
@@ -17,28 +21,34 @@ class AddCoursesModel extends ChangeNotifier {
   String? photoPill;
 
 
-  Future<void> saveCoursesToHive() async {
-    final box = await Hive.openBox<CourseHive>('courses_box');
-    final courseHive = CourseHive(
+  Future<void> saveNewCoursesToHive() async {
+    await _saveImageFromCashToAppDocDir(pickedFile);
+    saveCoursesToHive(CourseHive(
         namePill: namePill,
         descriptionPill: descriptionPill,
         photoPill: photoPill,
-        timeOfReceipt: timeOfReceipt);
-    await box.add(courseHive);
-
+        timeOfReceipt: timeOfReceipt));
   }
 
 
+  Future<void> completeCourseAndToFirebase(BuildContext context) async {
+    photoPill =await FireBaseStorageApi().loadImageOnStorage(pickedFile);
+    Course course = Course(
+        idUser: userId ?? '',
+        namePill: namePill,
+        descriptionPill: descriptionPill,
+        photoPill: photoPill,
+        timeOfReceipt: timeOfReceipt,
+        namePhotoPillInStorage:pickedFile?.name);
+    if (context.mounted) await FireBaseFirestoreApi().createCourse(context,course);
 
+  }
 
   /////////////////////////////////
   void addTime(BuildContext context) async {
-    final timeOfDay = await showTimePicker(
-        context: context,
-        initialTime: TimeOfDay.now(),
-        initialEntryMode: TimePickerEntryMode.dial);
-    if (timeOfDay != null) {
-      timeOfReceipt.add('${timeOfDay.hour}:${timeOfDay.minute}');
+    final time = await formatTime(context);
+    if (time != null) {
+      timeOfReceipt.add(time);
       notifyListeners();
     }
   }
@@ -47,7 +57,6 @@ class AddCoursesModel extends ChangeNotifier {
     timeOfReceipt.removeAt(index);
     notifyListeners();
   }
-
 
 
 //меню выбора
@@ -111,10 +120,25 @@ class AddCoursesModel extends ChangeNotifier {
     ));
     if (pickedFile != null) {
       photoPill = pickedFile!.path;
+      print(photoPill);
       tumbler = true;
       notifyListeners();
     } else {
       return;
+    }
+  }
+
+  Future <void> _saveImageFromCashToAppDocDir(XFile? pickedFile) async {
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    String appDocPath = appDocDir.path;
+    if (pickedFile != null) {
+      String fileName = pickedFile.name;
+      String filePath = '$appDocPath/$fileName';
+      photoPill = filePath;
+      File(pickedFile.path).copySync(filePath);
+      // File(pickedFile.path).delete();
+    } else {
+      photoPill = null ;
     }
   }
 }

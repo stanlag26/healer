@@ -11,8 +11,8 @@ Course _$CourseFromJson(Map<String, dynamic> json) => Course(
       idUser: json['idUser'] as String,
       namePill: json['namePill'] as String,
       descriptionPill: json['descriptionPill'] as String,
-      photoPill: json['photoPill'] as String,
-      namePhotoPillInStorage: json['namePhotoPillInStorage'] as String,
+      photoPill: json['photoPill'] as String?,
+      namePhotoPillInStorage: json['namePhotoPillInStorage'] as String?,
       timeOfReceipt: (json['timeOfReceipt'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),

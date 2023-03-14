@@ -16,7 +16,7 @@ Future<void> saveCoursesToHiveFromFirebase(Course course) async {
   await box.add(courseHive);
 }
 
-Future<void> saveCoursesToHive(Course course) async {
+Future<void> saveCoursesToHive(CourseHive course) async {
   final box = await Hive.openBox<CourseHive>('courses_box');
   final courseHive = CourseHive(
       namePill: course.namePill,
@@ -44,13 +44,4 @@ String nameUser()  {
   return userBox.get('user')?? '';
 }
 
-bool isFirstEntry()  {
-  final userBox = Hive.box('user_box');
-  return userBox.get('first_entry') ?? false;
-}
-
-void exitApp()  {
-  final userBox = Hive.box('user_box');
-  userBox.put('first_entry', false);
-}
 

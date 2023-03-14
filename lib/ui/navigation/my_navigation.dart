@@ -7,8 +7,6 @@ import '../auth/forget_password/forget_password.dart';
 import '../auth/sing_in_reg/sing_in_reg.dart';
 import '../bottom_navigation_bar/bottom_navigation_bar.dart';
 // import 'package:device_preview/device_preview.dart';
-import '../firebase_recipes/add_recipes/add_recipes.dart';
-import '../firebase_recipes/edit_recipe/edit_recipe.dart';
 import '../firebase_recipes/recipes/recipes.dart';
 import '../intro/info.dart';
 import '../my_courses/add_courses/add_courses.dart';
@@ -45,8 +43,6 @@ class MyNavigation extends StatelessWidget {
         MainNavigationRouteNames.singIn: (context) => const RegisterSingInProviderWidget(),
         MainNavigationRouteNames.forgotPass: (context) => ForgotWidget(),
         MainNavigationRouteNames.recipes: (context) => const Recipes(),
-        MainNavigationRouteNames.recipesAdd: (context) => const AddRecipesProviderWidget(),
-        MainNavigationRouteNames.recipesEdit: (context) => const EditRecipesProviderWidget(),
         MainNavigationRouteNames.courses: (context) => const CoursesProviderWidget(),
         MainNavigationRouteNames.coursesAdd: (context) => const AddCoursesProviderWidget(),
         MainNavigationRouteNames.coursesEdit: (context) => const EditCoursesProviderWidget(),
