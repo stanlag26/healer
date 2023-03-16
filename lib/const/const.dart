@@ -5,7 +5,7 @@ const defaultImage = 'https://firebasestorage.googleapis.com/v0/b/doctor-a0382.a
 
 
 abstract class MyTextStyle{
-  static const TextStyle textStyle25Bolt = TextStyle(fontSize: 25, fontWeight: FontWeight.w600,color: Colors.black);
+  static const TextStyle textStyle25Bold = TextStyle(fontSize: 25, fontWeight: FontWeight.w600,color: Colors.black);
   static const TextStyle textStyle25 = TextStyle(fontSize: 25, fontWeight: FontWeight.w400,color: Colors.black);
   static const TextStyle textStyle20 = TextStyle(fontSize: 20, fontWeight: FontWeight.w400,color: Colors.black);
   static const TextStyle textStyle15 = TextStyle(fontSize: 15, fontWeight: FontWeight.w400);

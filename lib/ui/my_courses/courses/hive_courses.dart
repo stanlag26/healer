@@ -1,8 +1,10 @@
 import 'dart:io';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:healer/entity/course_hive.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import '../../../api/awesome_notifications_push/notifications.dart';
 import '../../../api/hive_api/hive_api.dart';
 import '../../../api/main_navigation/main_navigation.dart';
 import '../../../api/my_functions/my_functions.dart';
@@ -31,15 +33,21 @@ class Courses extends StatefulWidget {
 }
 
 class _CoursesState extends State<Courses> {
+
+
   @override
   void initState() {
     super.initState();
+
     accessToNotifications(context);
+
   }
 
   @override
   Widget build(BuildContext context) {
     final model = context.watch<CoursesModel>();
+
+
     return Scaffold(
       body: (model.courses.isEmpty)
           ? SafeArea(
@@ -73,6 +81,10 @@ class _CoursesState extends State<Courses> {
               itemBuilder: (BuildContext context, int index) {
                 return CardWidget(indexInList: index);
               }),
+
+
+
+
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blue,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),

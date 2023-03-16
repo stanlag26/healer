@@ -12,6 +12,7 @@ import '../intro/info.dart';
 import '../my_courses/add_courses/add_courses.dart';
 import '../my_courses/courses/hive_courses.dart';
 import '../my_courses/edit_courses/edit_courses.dart';
+import '../my_courses/view_course/view_course.dart';
 import '../settings/settings.dart';
 
 class MyNavigation extends StatelessWidget {
@@ -46,6 +47,7 @@ class MyNavigation extends StatelessWidget {
         MainNavigationRouteNames.courses: (context) => const CoursesProviderWidget(),
         MainNavigationRouteNames.coursesAdd: (context) => const AddCoursesProviderWidget(),
         MainNavigationRouteNames.coursesEdit: (context) => const EditCoursesProviderWidget(),
+        MainNavigationRouteNames.coursesView: (context) =>  const ViewCourse(),
         MainNavigationRouteNames.intro: (context) => const Intro(),
         MainNavigationRouteNames.settings: (context) =>  const Settings(),
 

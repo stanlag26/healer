@@ -123,7 +123,7 @@ class CardWidget extends StatelessWidget {
                       ),
                       child: Text(AppLocalizations.of(context)!.add_recipe),
                     ),
-                    SizedBox(width: 8),
+                    const SizedBox(width: 8),
                     ElevatedButton(
                       onPressed: () {
                         showDialog<void>(
@@ -131,7 +131,7 @@ class CardWidget extends StatelessWidget {
                             barrierDismissible: false, // user must tap button!
                             builder: (BuildContext context) {
                               return MyShowMyAlertDialog(
-                                text: AppLocalizations.of(context)!.del_recipe,
+                                text: AppLocalizations.of(context)!.del,
                                 onPressed: () {
                                   FireBaseFirestoreApi()
                                       .delCourse(context, course);
@@ -153,9 +153,9 @@ class CardWidget extends StatelessWidget {
                           ),
                         ),
                       ),
-                      child: Text(AppLocalizations.of(context)!.del_recipe),
+                      child: Text(AppLocalizations.of(context)!.del),
                     ),
-                    SizedBox(width: 8),
+                    const SizedBox(width: 8),
                   ],
                 ),
               ],

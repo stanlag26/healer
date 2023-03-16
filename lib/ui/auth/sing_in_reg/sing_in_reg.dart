@@ -44,7 +44,7 @@ class RegisterSingIn extends StatelessWidget {
                 ),
                 Text(
                   AppLocalizations.of(context)!.welcome,
-                  style:MyTextStyle.textStyle25Bolt,
+                  style:MyTextStyle.textStyle25Bold,
                   textAlign: TextAlign.center,),
                 Image.asset(Resource.logoWithoutBackground,
                 width: MediaQuery.of(context).size.width/2.5,

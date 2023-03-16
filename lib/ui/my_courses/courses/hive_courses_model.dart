@@ -12,7 +12,6 @@ class CoursesModel extends ChangeNotifier {
   late Box<CourseHive> _box;
 
   List<CourseHive> get courses => List.unmodifiable(_courses);
-
   CoursesModel() {
     _setup();
   }
@@ -55,7 +54,10 @@ class CoursesModel extends ChangeNotifier {
                 ? 'asset://${Resource.pills}'
                 :'file://${course.photoPill}',
             hour: int.parse(timeSplit[0]),
-            minute: int.parse(timeSplit[1])
+            minute: int.parse(timeSplit[1]),
+            payload: {
+              'i':'1'
+            }
         );
       }
     }

@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:healer/ui/navigation/my_navigation.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'api/awesome_notifications_push/notifications.dart';
 import 'entity/course_hive.dart';
 import 'firebase_options.dart';
 
@@ -34,7 +35,7 @@ Future<void> main() async {
       ),
     ],
   );
-
+  AwesomeNotifications().setListeners(onActionReceivedMethod:NotificationService.onActionReceived);
   runApp(const MyNavigation());
   // runApp(
   //   DevicePreview(

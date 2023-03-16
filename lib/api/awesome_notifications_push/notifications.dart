@@ -8,6 +8,8 @@ class NotificationService {
     required String photo,
     required int hour,
     required int minute,
+    required Map<String, String?> payload,
+
   }) async {
     final timeZone = await AwesomeNotifications().getLocalTimeZoneIdentifier();
     final schedule = NotificationCalendar(
@@ -28,13 +30,18 @@ class NotificationService {
       wakeUpScreen: true,
       autoDismissible:false,
       criticalAlert: true,
-      locked: true
+      locked: true,
+      payload: payload
 
     );
     final actionButtons = [
       NotificationActionButton(
         key: 'DONE',
         label: 'Ok',
+      ),
+      NotificationActionButton(
+        key: 'NO',
+        label: 'No',
       ),
     ];
 
@@ -45,7 +52,23 @@ class NotificationService {
     );
   }
 
+  static Future <void> onActionReceived(ReceivedAction receivedAction) async {
+    String? payload =receivedAction.bigPicture;
+    if (receivedAction.buttonKeyPressed == 'DONE') {
+      // Обработка нажатия на первую кнопку уведомления с передачей полезной нагрузки
+      print('Нажата кнопка 1 с переданной полезной нагрузкой: $payload');
+    } else if (receivedAction.buttonKeyPressed == 'NO') {
+      // Обработка нажатия на вторую кнопку уведомления с передачей полезной нагрузки
+      print('Нажата кнопка 2 с переданной полезной нагрузкой: $payload');
+    } else {
+      // Обработка нажатия на уведомление без нажатия на кнопки с передачей полезной нагрузки
+      print('Уведомление нажато без нажатия на кнопки с переданной полезной нагрузкой: $payload');
+    }
+  }
+
   static Future<void> cancelScheduledNotifications() async {
     await AwesomeNotifications().cancelAllSchedules();
   }
+
+
 }
