@@ -42,19 +42,6 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
           IconButton(
               onPressed: () {
                 Navigator.pushNamed(context, MainNavigationRouteNames.settings);
-                // showDialog<void>(
-                //     context: context,
-                //     barrierDismissible: false, // user must tap button!
-                //     builder: (BuildContext context) {
-                //       return MyShowMyAlertDialog(
-                //         text: AppLocalizations.of(context)!.logoff,
-                //         onPressed: () {
-                //           MyAuth.signOut(context);
-                //           Navigator.popAndPushNamed(
-                //               context, MainNavigationRouteNames.singIn);
-                //         },
-                //       );
-                //     });
               },
               icon: const Icon(
                 FontAwesomeIcons.gear,size: 20,

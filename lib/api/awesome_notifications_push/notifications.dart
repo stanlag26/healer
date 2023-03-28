@@ -1,4 +1,9 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:flutter/material.dart';
+
+import '../main_navigation/main_navigation.dart';
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class NotificationService {
   static Future<void> createNotification({
@@ -8,7 +13,6 @@ class NotificationService {
     required String photo,
     required int hour,
     required int minute,
-    required Map<String, String?> payload,
 
   }) async {
     final timeZone = await AwesomeNotifications().getLocalTimeZoneIdentifier();
@@ -26,22 +30,21 @@ class NotificationService {
       title: name,
       body: description,
       bigPicture: photo,
-      notificationLayout: NotificationLayout.BigPicture,
+      notificationLayout: NotificationLayout.Default,
       wakeUpScreen: true,
       autoDismissible:false,
       criticalAlert: true,
       locked: true,
-      payload: payload
 
     );
     final actionButtons = [
       NotificationActionButton(
         key: 'DONE',
-        label: 'Ok',
+        label: 'Хорошо',
       ),
       NotificationActionButton(
         key: 'NO',
-        label: 'No',
+        label: 'Выпью позже',
       ),
     ];
 
@@ -53,16 +56,20 @@ class NotificationService {
   }
 
   static Future <void> onActionReceived(ReceivedAction receivedAction) async {
-    String? payload =receivedAction.bigPicture;
+    String? title =receivedAction.title;
+    String? body =receivedAction.body;
+    String? bigPicture =receivedAction.bigPicture;
     if (receivedAction.buttonKeyPressed == 'DONE') {
       // Обработка нажатия на первую кнопку уведомления с передачей полезной нагрузки
-      print('Нажата кнопка 1 с переданной полезной нагрузкой: $payload');
+      navigatorKey.currentState!.pushNamed(MainNavigationRouteNames.coursesView, arguments: [title, body, bigPicture]);
+      print(receivedAction.bigPicture);
+
     } else if (receivedAction.buttonKeyPressed == 'NO') {
       // Обработка нажатия на вторую кнопку уведомления с передачей полезной нагрузки
-      print('Нажата кнопка 2 с переданной полезной нагрузкой: $payload');
+      AwesomeNotifications().dismiss(receivedAction.id!);
     } else {
       // Обработка нажатия на уведомление без нажатия на кнопки с передачей полезной нагрузки
-      print('Уведомление нажато без нажатия на кнопки с переданной полезной нагрузкой: $payload');
+      navigatorKey.currentState!.pushNamed(MainNavigationRouteNames.coursesView, arguments: [title, body, bigPicture]);
     }
   }
 

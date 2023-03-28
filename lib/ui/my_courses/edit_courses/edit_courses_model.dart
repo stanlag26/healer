@@ -104,8 +104,8 @@ class EditCoursesModel extends ChangeNotifier{
     final ImagePicker picker = ImagePicker();
     pickedFile = (await picker.pickImage(
       source: source,
-      maxWidth: 300,
-      maxHeight: 300,
+      maxWidth: 400,
+      maxHeight: 400,
       imageQuality: 100,
     ));
     if (pickedFile != null) {
@@ -132,8 +132,6 @@ class EditCoursesModel extends ChangeNotifier{
         File(oldPhotoPill!).delete();
       }
       File(pickedFile.path).delete();
-    } else {
-      photoPill = null ;
     }
   }
 }

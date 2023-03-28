@@ -5,6 +5,7 @@ import '../../api/auth/auth.dart';
 import '../../api/hive_api/hive_api.dart';
 import '../../api/main_navigation/main_navigation.dart';
 import '../../my_widgets/my_show_dialog.dart';
+import 'package:app_settings/app_settings.dart';
 
 
 class Settings extends StatelessWidget {
@@ -24,6 +25,18 @@ class Settings extends StatelessWidget {
                 title: Text(nameUser(),),
                 leading: Icon(Icons.person),
                 onPressed: (BuildContext context)  {
+                },
+              ),
+            ],
+          ),
+          SettingsSection(
+            title: Text(AppLocalizations.of(context)!.settings),
+            tiles: [
+              SettingsTile(
+                title: Text(AppLocalizations.of(context)!.settings_push),
+                leading: const Icon(Icons.settings),
+                onPressed: (BuildContext context)  {
+                  AppSettings.openNotificationSettings();
                 },
               ),
             ],

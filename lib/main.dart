@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:healer/ui/navigation/my_navigation.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'api/awesome_notifications_push/notifications.dart';
+import 'api/resource/resource.dart';
 import 'entity/course_hive.dart';
 import 'firebase_options.dart';
 
@@ -24,6 +25,7 @@ Future<void> main() async {
         channelKey: 'basic_channel',
         channelName: 'Basic Notifications',
         defaultColor: Colors.teal,
+        icon: 'resource://drawable/icon.png',
         importance: NotificationImportance.Max,
         channelShowBadge: true, channelDescription: 'basic_channel',
         locked: true,

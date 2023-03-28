@@ -20,12 +20,14 @@ class CoursesModel extends ChangeNotifier {
     _box = await Hive.openBox<CourseHive>('courses_box');
     _courses = _box.values.toList();
     _box.listenable().addListener(() => _readCoursesFromHive());
+    // _saveCoursesToPush();
     notifyListeners();
-    _saveCoursesToPush();
+
   }
 
   Future<void> _readCoursesFromHive() async {
     _courses = _box.values.toList();
+    _saveCoursesToPush();
     notifyListeners();
   }
 
@@ -36,7 +38,7 @@ class CoursesModel extends ChangeNotifier {
       file.delete();
     }
     await _box.deleteAt(index);
-    _saveCoursesToPush();
+    // _saveCoursesToPush();
   }
 
   Future<void> _saveCoursesToPush() async {
@@ -55,9 +57,6 @@ class CoursesModel extends ChangeNotifier {
                 :'file://${course.photoPill}',
             hour: int.parse(timeSplit[0]),
             minute: int.parse(timeSplit[1]),
-            payload: {
-              'i':'1'
-            }
         );
       }
     }

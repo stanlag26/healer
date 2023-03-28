@@ -1,6 +1,7 @@
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../../api/awesome_notifications_push/notifications.dart';
 import '../../api/main_navigation/main_navigation.dart';
 import '../../const/const.dart';
 import '../auth/forget_password/forget_password.dart';
@@ -21,6 +22,7 @@ class MyNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey:  navigatorKey,
       useInheritedMediaQuery: true,
       // locale: DevicePreview.locale(context),
       // builder: DevicePreview.appBuilder,
@@ -47,7 +49,7 @@ class MyNavigation extends StatelessWidget {
         MainNavigationRouteNames.courses: (context) => const CoursesProviderWidget(),
         MainNavigationRouteNames.coursesAdd: (context) => const AddCoursesProviderWidget(),
         MainNavigationRouteNames.coursesEdit: (context) => const EditCoursesProviderWidget(),
-        MainNavigationRouteNames.coursesView: (context) =>  const ViewCourse(),
+        MainNavigationRouteNames.coursesView: (context) =>  ViewCourse(),
         MainNavigationRouteNames.intro: (context) => const Intro(),
         MainNavigationRouteNames.settings: (context) =>  const Settings(),
 

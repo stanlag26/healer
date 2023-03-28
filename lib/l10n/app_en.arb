@@ -25,7 +25,7 @@
     "healer": "Healer",
     "my_course": "My drugs",
     "recipe": "Drug archive",
-    "add_recipe_to_archive": "Save the medicine in the database?",
+    "add_recipe_to_archive": "Save the medicine in the cloud?",
 
 
     "add_recipe": "Add recipe",
@@ -46,6 +46,7 @@
 
 
     "settings": "Settings",
+    "settings_push": "Push notifications settings",
     "name": "Name",
     "account": "Account",
     "exit": "Exit",
