@@ -40,11 +40,7 @@ class NotificationService {
     final actionButtons = [
       NotificationActionButton(
         key: 'DONE',
-        label: 'Хорошо',
-      ),
-      NotificationActionButton(
-        key: 'NO',
-        label: 'Выпью позже',
+        label: 'OK',
       ),
     ];
 
@@ -62,11 +58,6 @@ class NotificationService {
     if (receivedAction.buttonKeyPressed == 'DONE') {
       // Обработка нажатия на первую кнопку уведомления с передачей полезной нагрузки
       navigatorKey.currentState!.pushNamed(MainNavigationRouteNames.coursesView, arguments: [title, body, bigPicture]);
-      print(receivedAction.bigPicture);
-
-    } else if (receivedAction.buttonKeyPressed == 'NO') {
-      // Обработка нажатия на вторую кнопку уведомления с передачей полезной нагрузки
-      AwesomeNotifications().dismiss(receivedAction.id!);
     } else {
       // Обработка нажатия на уведомление без нажатия на кнопки с передачей полезной нагрузки
       navigatorKey.currentState!.pushNamed(MainNavigationRouteNames.coursesView, arguments: [title, body, bigPicture]);

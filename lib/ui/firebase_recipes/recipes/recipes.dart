@@ -90,70 +90,76 @@ class CardWidget extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    ElevatedButton(
-                      onPressed: () async {
-                        if (await checkInternetConnection() != true) {
-                          if (context.mounted) {
-                            myToast(AppLocalizations.of(context)!.no_internet);
+                    Expanded(
+                      flex: 3,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          if (await checkInternetConnection() != true) {
+                            if (context.mounted) {
+                              myToast(AppLocalizations.of(context)!.no_internet);
+                            }
+                            return;
                           }
-                          return;
-                        }
-                        if (context.mounted) showMyDialogCircular(context);
-                        await saveCoursesToHiveFromFirebase(course);
-                        if (context.mounted) {
-                          Navigator.of(context, rootNavigator: true).pop();
-                        }
-                        if (context.mounted) {
-                          Navigator.popAndPushNamed(
-                              context, MainNavigationRouteNames.main);
-                        }
-                      },
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.blue),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                            side: const BorderSide(
-                              color: Colors.grey,
-                              width: 0.5,
+                          if (context.mounted) showMyDialogCircular(context);
+                          await saveCoursesToHiveFromFirebase(course);
+                          if (context.mounted) {
+                            Navigator.of(context, rootNavigator: true).pop();
+                          }
+                          if (context.mounted) {
+                            Navigator.popAndPushNamed(
+                                context, MainNavigationRouteNames.main);
+                          }
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(Colors.blue),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                              side: const BorderSide(
+                                color: Colors.grey,
+                                width: 0.5,
+                              ),
                             ),
                           ),
                         ),
+                        child: Text(AppLocalizations.of(context)!.add_recipe),
                       ),
-                      child: Text(AppLocalizations.of(context)!.add_recipe),
                     ),
                     const SizedBox(width: 8),
-                    ElevatedButton(
-                      onPressed: () {
-                        showDialog<void>(
-                            context: context,
-                            barrierDismissible: false, // user must tap button!
-                            builder: (BuildContext context) {
-                              return MyShowMyAlertDialog(
-                                text: AppLocalizations.of(context)!.del,
-                                onPressed: () {
-                                  FireBaseFirestoreApi()
-                                      .delCourse(context, course);
-                                  Navigator.of(context).pop();
-                                },
-                              );
-                            });
-                      },
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.red),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                            side: const BorderSide(
-                              color: Colors.grey,
-                              width: 0.5,
+                    Expanded(
+                      flex: 2,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          showDialog<void>(
+                              context: context,
+                              barrierDismissible: false, // user must tap button!
+                              builder: (BuildContext context) {
+                                return MyShowMyAlertDialog(
+                                  text: AppLocalizations.of(context)!.del,
+                                  onPressed: () {
+                                    FireBaseFirestoreApi()
+                                        .delCourse(context, course);
+                                    Navigator.of(context).pop();
+                                  },
+                                );
+                              });
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(Colors.red),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                              side: const BorderSide(
+                                color: Colors.grey,
+                                width: 0.5,
+                              ),
                             ),
                           ),
                         ),
+                        child: Text(AppLocalizations.of(context)!.del),
                       ),
-                      child: Text(AppLocalizations.of(context)!.del),
                     ),
                     const SizedBox(width: 8),
                   ],

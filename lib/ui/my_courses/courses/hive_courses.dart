@@ -1,11 +1,8 @@
 import 'dart:io';
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:healer/entity/course_hive.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import '../../../api/awesome_notifications_push/notifications.dart';
-import '../../../api/hive_api/hive_api.dart';
 import '../../../api/main_navigation/main_navigation.dart';
 import '../../../api/my_functions/my_functions.dart';
 import '../../../api/resource/resource.dart';

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:healer/my_widgets/my_button.dart';
 import 'dart:io';
-import '../../../api/awesome_notifications_push/notifications.dart';
 import '../../../api/resource/resource.dart';
 import '../../../const/const.dart';
-import '../../../entity/course_hive.dart';
 import '../../../my_widgets/my_avatar_photo.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

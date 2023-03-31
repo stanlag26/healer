@@ -60,6 +60,5 @@ class CoursesModel extends ChangeNotifier {
         );
       }
     }
-    print(count);
   }
 }

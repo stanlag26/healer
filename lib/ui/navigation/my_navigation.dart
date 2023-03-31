@@ -49,7 +49,7 @@ class MyNavigation extends StatelessWidget {
         MainNavigationRouteNames.courses: (context) => const CoursesProviderWidget(),
         MainNavigationRouteNames.coursesAdd: (context) => const AddCoursesProviderWidget(),
         MainNavigationRouteNames.coursesEdit: (context) => const EditCoursesProviderWidget(),
-        MainNavigationRouteNames.coursesView: (context) =>  ViewCourse(),
+        MainNavigationRouteNames.coursesView: (context) =>  const ViewCourse(),
         MainNavigationRouteNames.intro: (context) => const Intro(),
         MainNavigationRouteNames.settings: (context) =>  const Settings(),
 

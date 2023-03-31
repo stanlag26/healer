@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
-import '../../const/const.dart';
 import '../../entity/course.dart';
 import '../../my_widgets/my_toast.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

@@ -1,17 +1,13 @@
 
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'dart:io';
 import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:healer/entity/course_hive.dart';
-import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
-import '../../../api/firebase_api/firebase_api.dart';
 import '../../../api/hive_api/hive_api.dart';
 import '../../../api/timeofdate/timeofdate.dart';
-import '../../../entity/course.dart';
 
 class EditCoursesModel extends ChangeNotifier{
   late String namePill;
@@ -50,21 +46,21 @@ class EditCoursesModel extends ChangeNotifier{
 
 
 //меню выбора
-  void myShowAdaptiveActionSheet(BuildContext context)  {
+  void myShowAdaptiveActionSheet(BuildContext context) {
     showAdaptiveActionSheet(
       context: context,
-      title: const Text('Добавить фото'),
+      title: Text(AppLocalizations.of(context)!.add_photo),
       androidBorderRadius: 30,
       actions: <BottomSheetAction>[
         BottomSheetAction(
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Icon(Icons.photo),
-              SizedBox(
+            children: [
+              const Icon(Icons.photo),
+              const SizedBox(
                 width: 10,
               ),
-              Text('Галерея'),
+              Text(AppLocalizations.of(context)!.galery),
             ],
           ),
           onPressed: (BuildContext context) {
@@ -75,15 +71,15 @@ class EditCoursesModel extends ChangeNotifier{
         BottomSheetAction(
             title: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Icon(
+              children: [
+                const Icon(
                   Icons.camera_alt_outlined,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 Text(
-                  'Камера',
+                  AppLocalizations.of(context)!.camera,
                 ),
               ],
             ),
@@ -93,7 +89,7 @@ class EditCoursesModel extends ChangeNotifier{
             }),
       ],
       cancelAction: CancelAction(
-          title: const Text('Cancel', style: TextStyle(color: Colors.black))),
+          title: Text(AppLocalizations.of(context)!.cancel, style: const TextStyle(color: Colors.black))),
     );
   }
 
@@ -110,7 +106,6 @@ class EditCoursesModel extends ChangeNotifier{
     ));
     if (pickedFile != null) {
       photoPill = pickedFile!.path;
-      print(photoPill);
       tumbler = true;
       notifyListeners();
     } else {

@@ -23,7 +23,7 @@ class Settings extends StatelessWidget {
             tiles: [
               SettingsTile(
                 title: Text(nameUser(),),
-                leading: Icon(Icons.person),
+                leading: const Icon(Icons.person),
                 onPressed: (BuildContext context)  {
                 },
               ),

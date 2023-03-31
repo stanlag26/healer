@@ -1,13 +1,10 @@
-import 'dart:async';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:healer/api/internet_connection/internet_connection.dart';
 import 'package:healer/api/resource/resource.dart';
 import 'package:healer/my_widgets/my_show_dialog.dart';
 import 'package:provider/provider.dart';
-import '../../../api/hive_api/hive_api.dart';
 import '../../../const/const.dart';
 import '../../../my_widgets/my_avatar_photo.dart';
 import '../../../my_widgets/my_button.dart';

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../api/auth/auth.dart';
 import '../../api/hive_api/hive_api.dart';
 import '../../api/main_navigation/main_navigation.dart';
 import '../../const/const.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../my_widgets/my_show_dialog.dart';
 import '../firebase_recipes/recipes/recipes.dart';
 import '../my_courses/courses/hive_courses.dart';
 

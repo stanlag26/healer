@@ -1,7 +1,6 @@
 import 'package:healer/entity/course.dart';
 import 'package:hive/hive.dart';
 import '../../entity/course_hive.dart';
-import '../../ui/my_courses/courses/hive_courses.dart';
 import '../firebase_api/firebase_api.dart';
 
 Future<void> saveCoursesToHiveFromFirebase(Course course) async {

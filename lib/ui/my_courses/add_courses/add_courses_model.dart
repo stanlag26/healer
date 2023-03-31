@@ -1,4 +1,4 @@
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -63,18 +63,18 @@ class AddCoursesModel extends ChangeNotifier {
   void myShowAdaptiveActionSheet(BuildContext context) {
     showAdaptiveActionSheet(
       context: context,
-      title: const Text('Добавить фото'),
+      title: Text(AppLocalizations.of(context)!.add_photo),
       androidBorderRadius: 30,
       actions: <BottomSheetAction>[
         BottomSheetAction(
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Icon(Icons.photo),
-              SizedBox(
+            children: [
+              const Icon(Icons.photo),
+              const SizedBox(
                 width: 10,
               ),
-              Text('Галерея'),
+              Text(AppLocalizations.of(context)!.galery),
             ],
           ),
           onPressed: (BuildContext context) {
@@ -85,15 +85,15 @@ class AddCoursesModel extends ChangeNotifier {
         BottomSheetAction(
             title: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Icon(
+              children: [
+                const Icon(
                   Icons.camera_alt_outlined,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 Text(
-                  'Камера',
+                  AppLocalizations.of(context)!.camera,
                 ),
               ],
             ),
@@ -103,7 +103,7 @@ class AddCoursesModel extends ChangeNotifier {
             }),
       ],
       cancelAction: CancelAction(
-          title: const Text('Cancel', style: TextStyle(color: Colors.black))),
+          title: Text(AppLocalizations.of(context)!.cancel, style: const TextStyle(color: Colors.black))),
     );
   }
 
@@ -120,7 +120,6 @@ class AddCoursesModel extends ChangeNotifier {
     ));
     if (pickedFile != null) {
       photoPill = pickedFile!.path;
-      print(photoPill);
       tumbler = true;
       notifyListeners();
     } else {
