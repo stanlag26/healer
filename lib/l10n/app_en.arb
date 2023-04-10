@@ -22,7 +22,7 @@
     "password_reset_text": "Enter your email to reset your password",
     "reset_password": "Reset password",
 
-    "healer": "Healer",
+    "healer": "Healthnier",
     "my_course": "My drugs",
     "recipe": "Drug archive",
     "add_recipe_to_archive": "Save the medicine in the cloud?",
@@ -50,11 +50,12 @@
     "name": "Name",
     "account": "Account",
     "exit": "Exit",
+     "back": "Back",
 
     "time_pills": "Time to take the pills:",
 
     "allow_notifications": "Allow Notifications",
-    "app_to_send_notifications": "The Healer app wants to send you notifications",
+    "app_to_send_notifications": "The Healthnier app wants to send you notifications",
     "disable":"Disable",
     "allow": "Allow",
     "time_medication": "Time of medication:",

@@ -36,106 +36,115 @@ class AddCourses extends StatelessWidget {
   Widget build(BuildContext context) {
     final model = context.watch<AddCoursesModel>();
 
-    return Scaffold(
-      appBar: AppBar(
-          title: Text(
-            AppLocalizations.of(context)!.add_recipe,
-            style: MyTextStyle.textStyle25,
-          ),
-          actions: [
-            IconButton(
-                onPressed: () async {
-                  if (namePillController.text.isEmpty ||
-                      descriptionPillController.text.isEmpty ||
-                      model.timeOfReceipt.isEmpty) {
-                    myToast(AppLocalizations.of(context)!.validation);
-                    return;
-                  } else {
-                    model.saveNewCoursesToHive();
-                  await  showDialog<void>  (
-                        context: context,
-                        barrierDismissible: false, // user must tap button!
-                        builder: (BuildContext context) {
-                          return MyShowMyAlertDialog(
-                            text: AppLocalizations.of(context)!.add_recipe_to_archive,
-                            onPressed: () async {
-                              if (context.mounted) showMyDialogCircular(context);
-                              if (context.mounted)  await model.completeCourseAndToFirebase(context);
+    return GestureDetector(
+      onTap: (){
+        FocusScopeNode currentFocus = FocusScope.of(context);
 
-                              if (context.mounted) Navigator.of(context, rootNavigator: true).pop();
-                              if (context.mounted) Navigator.pop(context);
-                            },
-                          );
-                        });
-                    if (context.mounted) Navigator.pop(context);
-                    final pickedFile = model.pickedFile;
-                    if (pickedFile != null) File(pickedFile.path).delete();
-                  }
-                },
-                icon: const Icon(
-                  FontAwesomeIcons.floppyDisk,
-                  size: 25,
-                )),
-            const SizedBox(
-              width: 20,
-            )
-          ],
-          centerTitle: true),
-      body: SafeArea(
-        child: ListView(
-          children: [
-            MyTextField(
-                onChanged: (value) => model.namePill = value,
-                hintTextField: AppLocalizations.of(context)!.namePill,
-                controller: namePillController),
-            MyTextField(
-              onChanged: (value) => model.descriptionPill = value,
-              hintTextField: AppLocalizations.of(context)!.descriptionPill,
-              controller: descriptionPillController,
-              maxLine: 5,
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+            title: Text(
+              AppLocalizations.of(context)!.add_recipe,
+              style: MyTextStyle.textStyle25,
             ),
-            const SizedBox(
-              height: 15,
-            ),
-            MyButton(
-                myText: model.tumbler != true
-                    ? Text(AppLocalizations.of(context)!.add_photo)
-                    : Text(AppLocalizations.of(context)!.change_photo),
-                onPress: () {
-                  model.myShowAdaptiveActionSheet(context);
-                }),
-            const SizedBox(
-              height: 10,
-            ),
-            model.tumbler == true
-                ? MyAvatarPhoto(
-                    photo: model.photoPill == null
-                        ? Image.asset(Resource.pills)
-                        : Image.file(File(model.photoPill!), fit: BoxFit.cover))
-                : Container(),
-            const SizedBox(
-              height: 10,
-            ),
-            MyButton(
-                myText: Text(AppLocalizations.of(context)!.add_time_pills),
-                onPress: () {
-                  model.addTime(context);
-                }),
-            const SizedBox(
-              height: 10,
-            ),
-            SizedBox(
-                height: 300,
-                child: ListView.builder(
-                    itemCount: model.timeOfReceipt.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return MyTimeInterval(
-                        count: model.timeOfReceipt.length,
-                        titleText: model.timeOfReceipt[index],
-                        onPress: () {model.delTime(index);},
-                      );
-                    })),
-          ],
+            actions: [
+              IconButton(
+                  onPressed: () async {
+                    if (namePillController.text.isEmpty ||
+                        descriptionPillController.text.isEmpty ||
+                        model.timeOfReceipt.isEmpty) {
+                      myToast(AppLocalizations.of(context)!.validation);
+                      return;
+                    } else {
+                      model.saveNewCoursesToHive();
+                    await  showDialog<void>  (
+                          context: context,
+                          barrierDismissible: false, // user must tap button!
+                          builder: (BuildContext context) {
+                            return MyShowMyAlertDialog(
+                              text: AppLocalizations.of(context)!.add_recipe_to_archive,
+                              onPressed: () async {
+                                if (context.mounted) showMyDialogCircular(context);
+                                if (context.mounted)  await model.completeCourseAndToFirebase(context);
+
+                                if (context.mounted) Navigator.of(context, rootNavigator: true).pop();
+                                if (context.mounted) Navigator.pop(context);
+                              },
+                            );
+                          });
+                      if (context.mounted) Navigator.pop(context);
+                      final pickedFile = model.pickedFile;
+                      if (pickedFile != null) File(pickedFile.path).delete();
+                    }
+                  },
+                  icon: const Icon(
+                    FontAwesomeIcons.floppyDisk,
+                    size: 25,
+                  )),
+              const SizedBox(
+                width: 20,
+              )
+            ],
+            centerTitle: true),
+        body: SafeArea(
+          child: ListView(
+            children: [
+              MyTextField(
+                  onChanged: (value) => model.namePill = value,
+                  hintTextField: AppLocalizations.of(context)!.namePill,
+                  controller: namePillController),
+              MyTextField(
+                onChanged: (value) => model.descriptionPill = value,
+                hintTextField: AppLocalizations.of(context)!.descriptionPill,
+                controller: descriptionPillController,
+                maxLine: 5,
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              MyButton(
+                  myText: model.tumbler != true
+                      ? Text(AppLocalizations.of(context)!.add_photo)
+                      : Text(AppLocalizations.of(context)!.change_photo),
+                  onPress: () {
+                    model.myShowAdaptiveActionSheet(context);
+                  }),
+              const SizedBox(
+                height: 10,
+              ),
+              model.tumbler == true
+                  ? MyAvatarPhoto(
+                      photo: model.photoPill == null
+                          ? Image.asset(Resource.pills)
+                          : Image.file(File(model.photoPill!), fit: BoxFit.cover))
+                  : Container(),
+              const SizedBox(
+                height: 10,
+              ),
+              MyButton(
+                  myText: Text(AppLocalizations.of(context)!.add_time_pills),
+                  onPress: () {
+                    model.addTime(context);
+                  }),
+              const SizedBox(
+                height: 10,
+              ),
+              SizedBox(
+                  height: 300,
+                  child: ListView.builder(
+                      itemCount: model.timeOfReceipt.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return MyTimeInterval(
+                          count: model.timeOfReceipt.length,
+                          titleText: model.timeOfReceipt[index],
+                          onPress: () {model.delTime(index);},
+                        );
+                      })),
+            ],
+          ),
         ),
       ),
     );

@@ -21,7 +21,7 @@
   "password_reset_text": "Введение электронную почту для обнуления пароля",
   "reset_password": "Обнулить пароль",
 
-  "healer": "Лекарь",
+  "healer": "Healthnier",
   "my_course": "Мои лекарства",
   "recipe": "Архив лекарств",
   "add_recipe_to_archive": "Сохранить лекарство в облако? ",
@@ -46,12 +46,14 @@
   "settings_push": "Настройка уведомлений",
   "name": "Имя",
   "account": "Аккаунт",
-  "exit": "Выход",
+  "exit": "Закрыть",
+  "back": "Назад",
+
 
   "time_pills": "Время приема лекарств:",
 
   "allow_notifications": "Разрешить уведомления",
-  "app_to_send_notifications": "Приложение Лекарь хочет отправлять вам уведомления",
+  "app_to_send_notifications": "Приложение Healthnier хочет отправлять вам уведомления",
   "disable":"Запретить",
   "allow": "Разрешить",
   "time_medication": "Время приёма лекарства:",

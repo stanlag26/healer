@@ -34,6 +34,12 @@ class MyNavigation extends StatelessWidget {
             backgroundColor: Colors.white10,
             iconTheme: IconThemeData(color: Colors.grey, size: 15),
             titleTextStyle: MyTextStyle.textStyle25),
+        pageTransitionsTheme: const PageTransitionsTheme(
+          builders: {
+            TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+            TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+          },
+        ),
       ),
       debugShowCheckedModeBanner: false,
       title: 'Healer',

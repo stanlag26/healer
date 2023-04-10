@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/services.dart';
 import 'package:healer/entity/course_hive.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -35,9 +36,7 @@ class _CoursesState extends State<Courses> {
   @override
   void initState() {
     super.initState();
-
     accessToNotifications(context);
-
   }
 
   @override

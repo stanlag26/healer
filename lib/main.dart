@@ -37,11 +37,11 @@ Future<void> main() async {
   );
   AwesomeNotifications().setListeners(onActionReceivedMethod:NotificationService.onActionReceived);
   runApp(const MyNavigation());
-  runApp(
-    DevicePreview(
-      enabled: true,
-      builder: (context) => const MyNavigation(),
-    ),
-  );
+  // runApp(
+  //   DevicePreview(
+  //     enabled: true,
+  //     builder: (context) => const MyNavigation(),
+  //   ),
+  // );
 }
 

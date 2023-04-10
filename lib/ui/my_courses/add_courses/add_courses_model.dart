@@ -114,8 +114,8 @@ class AddCoursesModel extends ChangeNotifier {
     final ImagePicker picker = ImagePicker();
     pickedFile = (await picker.pickImage(
       source: source,
-      maxWidth: 400,
-      maxHeight: 400,
+      maxWidth: 600,
+      maxHeight: 600,
       imageQuality: 100,
     ));
     if (pickedFile != null) {
